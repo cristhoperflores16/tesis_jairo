@@ -1,0 +1,261 @@
+%-------------------------------------------------------------------------
+% CONFIGURACIONES
+%-------------------------------------------------------------------------
+%-Ecuaciones
+\setlength{\abovedisplayskip}{2mm}
+\setlength{\belowdisplayskip}{2mm}
+
+%-------------------------------------------------------------------------
+% CARATULA
+%-------------------------------------------------------------------------
+
+\begin{titlepage}
+	
+	\begin{center}
+		\thispagestyle{empty}
+	    {\fontsize{20}{16}\selectfont \bf \universidad \par }\vspace*{0.5cm}
+	    
+		{\fontsize{18}{5}\selectfont  \bf \facultad }\\ [4.5mm]
+		
+		{\fontsize{16}{5}\selectfont  \bf \escuela }\\[0.9cm]
+		
+		\includegraphics[scale=0.85]{Graficos/0UNSCH}\\
+		\vspace{0.85cm}
+		
+		{\fontsize{16}{16}\selectfont  \bf \tema  \par }  \vspace*{0.7cm}
+		
+		{\fontsize{14}{10}\selectfont \bfsc{BORRADOR DE TESIS} }\\[2.5mm]
+		{\fontsize{14}{7}\selectfont \sc Para Optar el Título Profesional de Ingeniero Civil}\\[8mm]
+		
+			
+		{\fontsize{14}{8}\selectfont \bfsc{ELABORADO POR:}}\\[2mm]
+		{\fontsize{14}{7}\selectfont  \autor }\\ [8mm]
+		
+		{\fontsize{14}{7}\selectfont \bf ASESOR: }\\[2mm]	
+		{\fontsize{14}{7}\selectfont \asesor}
+				
+       \vfill
+		{\fontsize{14}{7}\selectfont \sc Ayacucho - Perú}\\[1mm]
+		{\fontsize{14}{7}\selectfont \sc 2026}
+				
+		\end{center}
+		
+	\end{titlepage}
+
+\pagenumbering{roman}  \setcounter{page}{2}
+
+
+%-------------------------------------------------------------------------
+% RESUMEN
+%-------------------------------------------------------------------------
+\newpage
+\lchapter{Resumen}
+
+\begin{quotation}
+	\noindent 
+	
+	
+	%\noindent La presente investigación tuvo como objetivo evaluar numéricamente las deformaciones producidas por cargas vehiculares en rellenos estructurales conformados como terraplenes y en el trasdós de muros de contención, en la carretera vecinal EMP. AY-780 (Mollepata) – EMP. PE-3S (Pongora), provincia de Huamanga, departamento de Ayacucho. Para ello, se empleó un enfoque numérico-computacional basado en el Método de Elementos Finitos (FEM), utilizando el software PLAXIS 3D, complementado con la API del programa y scripts desarrollados en Python para automatizar el modelamiento, la ejecución de simulaciones y el procesamiento de resultados. El comportamiento del suelo fue representado mediante el modelo constitutivo Hardening Soil, cuyos parámetros fueron obtenidos de la caracterización geotécnica y validados mediante el ensayo de Deflectómetro de Impacto Ligero (LWD).
+	
+	%\noindent Los resultados mostraron asentamientos máximos corregidos de 3.71 mm en el terraplén y 3.73 mm en el trasdós del muro de contención, evidenciando una adecuada representación del comportamiento deformacional frente a cargas dinámicas. El análisis de sensibilidad, considerando variaciones entre el $\mp$ 10\%, 20\% y 30\% de los parámetros geotécnicos, determinó que el ángulo de fricción es el parámetro con mayor influencia sobre los asentamientos, seguido por el módulo de elasticidad, mientras que el ángulo de dilatancia presentó una influencia poco significativa. La validación estadística mediante los indicadores RMSE y MAE confirmó la confiabilidad del modelo numérico.
+	
+	%\noindent Finalmente, la investigación demuestra que el análisis dinámico tridimensional mediante el Método de Elementos Finitos constituye una herramienta confiable para estimar las deformaciones en rellenos estructurales sometidos a cargas vehiculares, se propone una metodología que integra modelamiento numérico, automatización computacional, validación experimental y análisis de sensibilidad, proporcionando criterios técnicos para optimizar el diseño geotécnico de carreteras y estructuras de contención, contribuyendo a mejorar la seguridad, durabilidad y desempeño de la infraestructura vial.
+	
+	\noindent La presente investigación evaluó numéricamente las deformaciones inducidas por cargas vehiculares en rellenos estructurales (terraplenes) y en el trasdós de muros de contención a lo largo del tramo EMP. AY‑780 (Mollepata) – EMP. PE‑3S (Pongora), provincia de Huamanga, Ayacucho. Se empleó un enfoque numérico-computacional basado en el Método de Elementos Finitos implementado en PLAXIS 3D, complementado con automatización vía API y scripts en Python para la generación de geometrías, la ejecución de simulación y el post‑procesamiento de resultados. El comportamiento del suelo se modeló con el modelo Hardening Soil, parametrizado a partir de la caracterización geotécnica y verificado mediante ensayos Deflectómetro de Impacto Ligero (LWD). El modelo consideró mallas 3D con refinamiento en zonas de interés, condiciones de contorno elásticas y cargas dinámicas representativas del tráfico. Se obtuvieron asentamientos máximos corregidos de 3.71 mm en el terraplén y 3.73 mm en el trasdós del muro, valores compatibles con los límites admisibles para la infraestructura vial estudiada. El análisis de sensibilidad (variaciones paramétricas ±10, ±20 y ±30\%) reveló que el ángulo de fricción domina la respuesta de asentamiento, seguido por el módulo de elasticidad; el ángulo de dilatancia mostró influencia mínima. La validación estadística mediante RMSE y MAE (valores: RMSE = 0.0831 mm, MAE = 0.0678 mm; n = 10 puntos) confirmó la confiabilidad del modelo numérico. Se propone una metodología integradora de modelamiento 3D, automatización computacional, validación experimental y análisis de sensibilidad, que aporta criterios técnicos para optimizar el diseño geotécnico de carreteras y muros de contención, mejorando la seguridad y desempeño de la infraestructura vial.
+	
+	
+	%Como principal aporte la investigación propone una metodología integrada que combina el modelamiento tridimensional, automatización computacional, validación experimental y análisis de sensibilidad para evaluar el comportamiento deformacional de rellenos estructurales sometidos a cargas dinámicas. Esta metodolo´gia constitutye una herramienta confiable para optimizar el diseño geotécnico de infraestructura vial, reduci la incertidumbre en la estimación de asentamiento y fortalecer la aplicación de técnicas avanzadas de simulación numérica en la ingeniería civil.
+	
+	%\noindent La presente investigación desarrolló una metodología numérico-computacional para evaluar las deformaciones producidas por cargas vehiculares en rellenos estructurales mediante el Método de Elementos Finitos implementado en PLAXIS 3D y automatizado mediante Python. Se construyeron modelos tridimensionales representativos de terraplenes y rellenos ubicados en el trasdós de muros de contención, considerando el comportamiento no lineal del suelo mediante el modelo constitutivo Hardening Soil. Los modelos fueron sometidos a análisis dinámicos con cargas móviles equivalentes al tránsito vehicular y posteriormente validados mediante el ensayo de Deflectómetro de Impacto Ligero (LWD).
+	
+	%\noindent Los resultados demostraron que el modelo numérico reproduce adecuadamente la evolución espacial y temporal de los asentamientos, permitiendo identificar la formación y propagación del bulbo de deformación, la redistribución de esfuerzos y la estabilización de las deformaciones durante el paso del vehículo. El análisis de sensibilidad estableció que el ángulo de fricción es el parámetro con mayor influencia sobre los asentamientos, seguido por el módulo de elasticidad, mientras que el ángulo de dilatancia presenta un efecto reducido en el rango de deformaciones estudiado.
+	
+	%\noindent Como principal aporte, la investigación propone una metodología reproducible que integra caracterización geotécnica, modelamiento tridimensional, automatización computacional, análisis dinámico, validación experimental y evaluación de sensibilidad paramétrica. Esta metodología fortalece el uso de herramientas numéricas avanzadas para el diseño y evaluación de rellenos estructurales en infraestructura vial, proporcionando criterios técnicos que contribuyen a optimizar el diseño geotécnico, mejorar la predicción de asentamientos y aumentar la confiabilidad de las obras de ingeniería civil sometidas a cargas vehiculares.
+	
+	
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%
+  %\noindent El presente estudio tiene como objetivo evaluar numéricamente las deformaciones inducidas por cargas vehiculares en rellenos estructurales mediante el método de elementos finitos haciendo uso del software con PLAXIS 3D. Los rellenos estructurales representan un elemento crítico en la construcción de infraestructuras viales, ya que su capacidad para soportar cargas repetitivas condiciona la durabilidad y el desempeño del pavimento. Una caracterización insuficiente del comportamiento deformacional del relleno puede generar asentamientos diferenciales, fisuras prematuras y disminución del nivel de servicio.
+  
+  %\noindent El análisis de sensibilidad permitió identificar que el ángulo de fricción interna es el parámetro geotécnico de mayor influencia sobre la magnitud de las deformaciones, seguido por el módulo de elasticidad y el ángulo de dilatancia. Se comprobó que el incremento de la rigidez del material reduce significativamente los asentamientos del relleno estructural, mientras que menores valores de resistencia al corte generan mayores deformaciones y redistribución de esfuerzos.
+
+  
+  
+  %aporte. el estudio proporciona cirterios tecnicos para mejorar la estabilidad y desempeño de carreteras en zonas altoandinas, contribuyendo a reducir asentamientos diferenciales y mejorar la vida util de la esfraestrcutrua vial
+  
+  
+  
+   
+  
+ % Los resultados permiten identificar la distribución espacial de tensiones y deformaciones en el relleno y cuantificar las zonas críticas de asentamiento. Asimismo, se comparan los valores obtenidos con límites admisibles establecidos en normas viales. Finalmente, se presentan recomendaciones orientadas a la optimización del diseño geotécnico de rellenos estructurales sometidos a tráfico vehicular.
+  
+  %%%%%%%%%%%%%%%%%%%%%%
+  %La presente investigación tiene como propósito evaluar numéricamente las deformaciones generadas por las cargas vehiculares sobre rellenos estructurales, considerando las condiciones geotécnicas típicas de la región de Ayacucho. Debido a la creciente construcción de infraestructura vial y la presencia de materiales de origen volcánico y suelos granulares de variada calidad, resulta fundamental determinar la capacidad del terreno de relleno para resistir cargas repetitivas provenientes del tránsito pesado.
+  
+  %Por ello se desarrolló un modelo tridimensional en PLAXIS 3D, empleando el modelo constitutivo Hardening Soil, que permite representar adecuadamente el comportamiento no lineal y dependiente de la tensión de los suelos compactados. Se definieron escenarios con espesores variables de relleno (1.00 a 3.00 $m$) y con parámetros geotécnicos obtenidos de estudios previos de suelos de Ayacucho.
+ %Las cargas vehiculares se presentaron mediante presiones puntuales distribuidas equivalentes a camiones tipo C2, C3 y C4, siguiendo las normativas peruanas de tránsito.
+ 
+ %Se analizaron las deformaciones verticales (asentamientos), las deformaciones plásticas y la distribucíon de tensiones dentro del relleno y la subrasante, incorporando una evaluación de sensibilidad para identificar la influencia de los parámetros más relevantes (E50, Eur, $\psi$, espesor del relleno). Los resultados muestran que el espesor del relleno y la rigidez del material son los factores que más controlan las deformaciones. Asimismo se observa que los camiones de mayor carga por eje producen bulbos de tensión más profundos, afectando significativamente la subrasante si esta presenta baja rigidez.
+ 
+%EL estudio concluye que es posible determinar un espesor óptimo de relleno para condiciones locales, capaz de minimizar asentamientos y garantizar un comportamiento adecuado frente al tránsito pesado. Además se valida la utilidad del modelamiento numérico como herramienta para el diseño geotécnico en proyectos viales en zonas con vaiabilidad de suelos como la Región de Ayacucho.
+ 
+ 
+ %\noindent
+% Los resultados muestran que es importante realizar un análisis numérico a estas estructuras, como también considerar la interacción suelo-estructura \\[0.10cm]
+ 
+\noindent \textbf{Palabras clave:} Método de Elementos Finitos, PLAXIS 3D, Hardening Soil, rellenos estructurales, cargas vehiculares, asentamientos, análisis dinámico, Deflectómetro de Impacto Ligero (LWD).
+\end{quotation}
+
+\vfill
+
+\echapter{Abstract}
+
+\begin{quotation}
+	\noindent This research numerically evaluated the deformations induced by vehicular loads in structural fills (embankments) and in the backfill of retaining walls along the section EMP. AY-780 (Mollepata) – EMP. PE-3S (Pongora), in the province of Huamanga, Ayacucho. A numerical-computational approach based on the Finite Element Method, implemented in PLAXIS 3D, was used, complemented by automation via API and Python scripts for geometry generation, simulation execution, and post-processing of results. Soil behavior was modeled using the Hardening Soil model, parameterized from the geotechnical characterization and verified through Light Weight Deflectometer (LWD) tests. The model considered 3D meshes with refinement in areas of interest, elastic boundary conditions, and dynamic loads representative of traffic. Corrected maximum settlements of 3.71 mm were obtained in the embankment and 3.73 mm in the backfill area of ​​the wall, values ​​consistent with the permissible limits for the studied road infrastructure. Sensitivity analysis (parametric variations ±10, ±20, and ±30\%) revealed that the friction angle dominates the settlement response, followed by the modulus of elasticity; the dilatancy angle showed minimal influence. Statistical validation using RMSE and MAE (values: RMSE = 0.0831 mm, MAE = 0.0678 mm; n = 10 points) confirmed the reliability of the numerical model. An integrated methodology of 3D modeling, computational automation, experimental validation, and sensitivity analysis is proposed, providing technical criteria to optimize the geotechnical design of roads and retaining walls, improving the safety and performance of the road infrastructure.
+	
+	%\noindent The objective of this study was to numerically evaluate the deformations caused by vehicular loads on structural fill formed as embankments and on the backface of retaining walls along the local highway between EMP. AY-780 (Mollepata) and EMP. PE-3S (Pongora) in the province of Huamanga, department of Ayacucho. To this end, a numerical-computational approach based on the Finite Element Method (FEM) was employed, using PLAXIS 3D software, supplemented by the program’s API and scripts developed in Python to automate modeling, simulation execution, and result processing. Soil behavior was modeled using the Hardening Soil constitutive model, whose parameters were obtained from geotechnical characterization and validated using the Lightweight Deflectometer (LWD) test. \parr
+	
+	%\noindent The results showed corrected maximum settlements of 3.71 mm on the embankment and 3.73 mm on the backface of the retaining wall, indicating an adequate representation of the deformation behavior under dynamic loads. The sensitivity analysis, considering variations of $\mp$ 10\%, 20\%, and 30\% in the geotechnical parameters, determined that the angle of friction is the parameter with the greatest influence on settlements, followed by the modulus of elasticity, while the angle of dilatancy had a negligible influence. Statistical validation using the RMSE and MAE metrics confirmed the reliability of the numerical model. \parr
+	
+	
+	%\noindent Finalmente, la investigación demuestra que el análisis dinámico tridimensional mediante el Método de Elementos Finitos constituye una herramienta confiable para estimar las deformaciones en rellenos estructurales sometidos a cargas vehiculares, se propone una metodología que integra modelamiento numérico, automatización computacional, validación experimental y análisis de sensibilidad, proporcionando criterios técnicos para optimizar el diseño geotécnico de carreteras y estructuras de contención, contribuyendo a mejorar la seguridad, durabilidad y desempeño de la infraestructura vial. \parr
+	
+
+  
+ \noindent 
+  The results show that it is important to perform a numerical analysis of these structures, as well as to consider the soil-structure interaction.\\[0.10cm]
+  
+  \noindent \textit{keywords} :Numerical model, Sensitivity analysis, Constitutive models, Finite elements.
+\end{quotation}
+
+
+
+%-------------------------------------------------------------------------
+% INTRODUCCION
+%-------------------------------------------------------------------------
+\rchapter{Introducción}
+
+
+%El incremento del tránsito vehicular ha generado mayores exigencias sobre los rellenos estructurales utilizados en carreteras, los cuales experimentan deformaciones que pueden afectar la estabilidad y el desempeño de la infraestructura vial. Aunque la modelación numérica mediante el método de los elementos finitos ha mejorado la evaluación del comportamiento de estos materiales, la confiabilidad de los resultados depende de una adecuada caracterización geotécnica y de la calibración de los parámetros constitutivos empleados en los modelos.
+
+%La presente investigación evalúa numéricamente las deformaciones producidas por cargas vehiculares en rellenos estructurales ubicados en el trasdós de muros de contención y en terraplenes de la carretera EMP. AY-780 (Mollepata) – EMP. PE-3S (Pongora), utilizando el software PLAXIS 3D y el modelo constitutivo Hardening Soil. La caracterización del material se realizó mediante ensayos geotécnicos de laboratorio y el ensayo Light Weight Deflectometer (LWD), cuyos resultados permitieron calibrar y validar indirectamente el modelo numérico.
+
+%El análisis incorpora la construcción por etapas, la aplicación de cargas vehiculares móviles mediante un análisis dinámico transitorio, criterios de mallado, condiciones de borde y amortiguamiento de Rayleigh, permitiendo evaluar la distribución de esfuerzos y deformaciones inducidas por el tránsito. Los resultados contribuyen al conocimiento del comportamiento mecánico de los rellenos estructurales y proporcionan una metodología aplicable al diseño y evaluación de infraestructura vial en condiciones geotécnicas similares a las de la región Ayacucho.
+
+
+El incremento del tránsito vehicular pesado en las ciudades de altura del perú, como Ayacucho ha generado la necesidad de diseñar y controlar adecuadamente los rellenos estructurales que conforman la plataforma de soporte de las carreteras. El comportamiento deformacional de estos rellenos bajo cargas dinamicas producidas por vehículos es un aspecto crítico para garantizar la durabilidad del pavimento, seguridad vial y la funcionalidad de la infraestructura.
+
+Tradicionamente la evaluacion de deformaciones en rellenos se ha basado en métodos empíricos o correlaciones derivadas de ensayos CBR y densificación. Sin embargo, estos métodos no permiten capturar adecuadamente la interacción suelo - carga vechicular, ni las variaciones no lineales de rigidez y deformabilidad, especialmente en zonas con suelos de baja calidad, compactaciones variables y pendientes pronunciadas como las presentes en la región de Ayacucho.
+
+En este contexto, el uso de herramientas numéricas avanzadas como PLAXIS 3D, basadas en el Método de Elementos Finitos (MEF), permite simular de forma más realista el comportamiento del relleno estructural sometido a solicitaciones vehiculares, considerando aspectos como la distribución de presiones en los ejes, modos de carga, secuencias constructivas y modelos constitutivos no lineales.
+
+
+El desarrollo de la presente investigación está organizado de la siguiente manera:
+
+\begin{itemize}
+	\item \textbf{Capítulo 1 - Planteamiento del problema:} Se expone el planteamiento del problema, describiendo la importancia de evaluar el comportamiento deformacional de los rellenos estructurales sometidos al tránsito vehicular y las limitaciones existentes en los métodos tradicionales de diseño y evaluación. Asimismo, se presenta la realidad problemática a nivel internacional, nacional y regional, y la delimitación de la investigación.
+	
+	
+	\item \textbf{Capítulo 2 - Bases teóricas:} Se desarrolla el marco teórico de la investigación mediante la revisión de antecedentes nacionales e internacionales y se presentan las bases conceptuales de la investigación.
+	
+	%Se desarrolla el marco teórico de la investigación mediante la revisión de antecedentes nacionales e internacionales relacionados con la modelación numérica de suelos, los modelos constitutivos empleados en geotecnia, la teoría de esfuerzos y deformaciones, el análisis dinámico transitorio y el ensayo Light Weight Deflectometer (LWD). Además, se presentan las bases conceptuales necesarias para comprender el comportamiento mecánico de los rellenos estructurales y la interacción suelo–estructura bajo cargas vehiculares.
+	
+	
+	\item \textbf{Capítulo 3 - Método de la investigación:} Se describe la metodología de la investigación, incluyendo el enfoque, tipo y diseño metodológico, así como los procedimientos para la caracterización geotécnica del terreno mediante ensayos de laboratorio y de campo. Se detalla el desarrollo del modelo numérico tridimensional en PLAXIS 3D, considerando la definición de la geometría, las dimensiones del dominio, los modelos constitutivos, los parámetros geotécnicos, los criterios de mallado, las condiciones de borde, la generación del estado inicial de esfuerzos y la construcción por etapas. Asimismo, se explica la modelación de la carga vehicular móvil mediante un análisis dinámico transitorio, incorporando la velocidad de circulación, la distribución de cargas por eje, el amortiguamiento de Rayleigh y las fronteras absorbentes. Finalmente, se desarrolla el procedimiento de calibración y validación indirecta del modelo utilizando los resultados obtenidos mediante el ensayo LWD, complementado con indicadores estadísticos para evaluar el grado de concordancia entre los resultados experimentales y numéricos.
+	
+	
+	\item \textbf{Capítulo 4 - resultados:} Se presentan y analizan los resultados obtenidos mediante el modelo numérico. Se evalúa el comportamiento del relleno estructural durante las etapas constructivas y bajo la acción de cargas vehiculares móviles, analizando la distribución de desplazamientos, deformaciones y esfuerzos en el sistema suelo–estructura  y evaluando la influencia de las propiedades mecánicas del relleno sobre su comportamiento frente a solicitaciones dinámicas, permitiendo establecer conclusiones y recomendaciones orientadas al diseño y evaluación de rellenos estructurales en infraestructura vial.
+	%Los resultados son comparados con los obtenidos mediante el ensayo LWD para verificar la representatividad de los parámetros geotécnicos utilizados en el modelo. Finalmente, se desarrolla la discusión técnica de los resultados, contrastándolos con investigaciones previas y evaluando la influencia de las propiedades mecánicas del relleno sobre su comportamiento frente a solicitaciones dinámicas, permitiendo establecer conclusiones y recomendaciones orientadas al diseño y evaluación de rellenos estructurales en infraestructura vial.
+	
+	
+	%\item \textbf{Capítulo 5 - Conclusiones}
+	
+	
+	\item \textbf{Referencias bibliografáficas:} Se presenta información de los materiales consultados, y referenciados a los largo de la elaboración de la tesis.
+	
+	
+	\item \textbf{Anexos:} Continene los resultados de los análisis de suelos, Panel fotografico de los ensayos realizados.
+\end{itemize}
+%\lipsum \parr 
+
+
+%-------------------------------------------------------------------------
+% DEDICATORIA
+%-------------------------------------------------------------------------
+
+\mchapter{Dedicatoria} %-> Capitulos vacios, sin encabezados.
+
+\vspace*{4.5cm}
+
+\begin{hspace}{0cm}
+	\begin{minipage}{10cm}
+		\emph{A mis padres son mi guía y mi camino para poder cumplir con mis metas, a ellos quienes siempre apostaron en la educación y en mi formación personal para enfrentar las adversidades con dignidad y respeto}
+	\end{minipage}
+\end{hspace}
+
+\vspace*{13.5cm}
+
+\begin{hspace}{5cm}
+  \begin{minipage}{10cm}
+    \emph{A mis hermanos, a quienes respeto y admiro. Por brindarme su tiempo, un buen ejemplo y un hombro para poder descansar}
+  \end{minipage}
+\end{hspace}
+
+
+%-------------------------------------------------------------------------
+% AGRADECIMIENTOS
+%-------------------------------------------------------------------------
+\rchapter{Agradecimientos}
+
+\begin{quote}
+  \emph{Al \asesor, asesor de la presente tesis, por sus sugerencias, recomendaciones, apreciaciones y por brindarme la información necesaria para la formulación del presente trabajo de investigación.}
+\end{quote}
+
+\begin{quote}
+	\emph{A mis jurados el Msc. Ing. Hugo Vilchez Perez y Mg. Ing. Hemerzon Lizarbe Alarcon, por todo el apoyo y consejos brindados durante la revisión de este trabajo.}
+\end{quote}
+
+\begin{quote}
+	\emph{A los docentes de la Escuela de Formación Profesional de Ingeniería Civil de la Universidad Nacional de San Cristóbal de Huamanga por su contribución durante mi desarrollo académico y profesional.}
+\end{quote}
+
+\begin{quote}
+	\emph{Finalmente, a mis amigos y compañeros de la Universidad Nacional de San Cristóbal de Huamanga, a la comunidad de \LaTeX, a la comunidad de usuarios de PYTHON y todos las personas que contribuyeron en el desarrollo de este trabajo.}
+\end{quote}
+
+\vspace{2cm}
+\begin{flushright}
+  \sc{\universidad \\
+    Ayacucho, Marzo de 2019}\\[0cm]
+  \textit{\autor}
+\end{flushright}
+
+%-------------------------------------------------------------------------
+% INDICES
+%-------------------------------------------------------------------------
+
+%->General----------------------------------------------------------------
+\tableofcontents   
+
+%->Figuras----------------------------------------------------------------
+\listoffigures      
+
+%->Cuadros o Tablas------------------------------------------------------- 
+\listoftables 	
+ 
+%->Glosario---------------------------------------------------------------
+\rglossary
+
+%->Acronimos--------------------------------------------------------------
+\racronym
+
+%->Simbolos---------------------------------------------------------------
+\rsymbols 
+     
+\glsaddall %Genera todos los glosarios en esta pagina.
+\glsresetall
+
+\newpage
+\pagestyle{Normal}

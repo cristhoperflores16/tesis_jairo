@@ -1,0 +1,92 @@
+%-------------------------------------------------------------------------------
+%Plantilla de latex - formato para tesis, Ingeniería Civil UNSCH.
+%Copyright (C) 2019 Rocky Ayala.
+
+%   El sigueinte código se distribuye con la esperanza de que sea útil, pero SIN
+%   NINGUNA GARANTÍA, Puede redistribuirlo y/o modificarlo bajo los términos  de
+%   la Licencia Pública General, bien de la versión 2 de dicha Licencia o
+%   bien (según su elección) de cualquier versión posterior.
+%-------------------------------------------------------------------------------
+\documentclass[12pt,a4paper,oneside,onecite,openright]{report}
+%\usepackage{Formatos/Yvely_Oct19}
+\usepackage{Formatos/Yvely_Nov18}
+
+% Como explica Hernández, Fernández & Baptista (2010), 
+%debido a la recopilación
+%Tal y como dice Nicholas Lovell (2014)
+%Concretamente, una investigación de principio de siglo (Segura Dimaría, 2007, 2014) señala que..
+%Segura Dimaría (2007a, 2007b) critica la idea de que...
+
+%-------------------------------------------------------------------------------
+%  CONFIGURACION INICIAL
+%-------------------------------------------------------------------------------
+
+%-Rotulos.
+\nBibliografia{Referencias bibliográficas}
+\nIGeneral{Índice General}
+\nITablas{Índice de Tablas}
+\nIFiguras{Índice de Figuras}
+
+\nIGlosario{Glosarios}
+\nIAcronimo{Lista de Acrónimos}
+\nISimbolo{Símbolos}
+\nTCapitulo{Capítulo} %Nombre de Capitulos.
+\nECapitulo{Capítulo} %Encabezados.
+\nEConclusion{Conclusiones} %Encabezados.
+
+\nTFigura{Figura}
+\nTTabla{Tabla}
+
+\tit{22}
+
+\tTfuente{8.5}
+\tFfuente{8.5}
+
+%-------------------------------------------------------------------------------
+%  MACROS
+%--------------------------------------------------------------------------
+
+\universidad{Universidad Nacional de San Cristóbal de Huamanga}
+\facultad{Facultad de Ingeniería de Minas, Geología y Civil}
+\escuela{Escuela de Formación Profesional de Ingeniera Civil}
+\tema{Desarrollo de una arquitectura para la evaluación de baches en pavimentos flexibles mediante el análisis de representaciones de profundidad con aprendizaje profundo, Ayacucho 2025}
+\autor{Bach. Jhon Kenyi Espinoza Barrientos}
+\asesor{Mgsc. Alex Sander Ircañaupa Huamani}
+
+
+\begin{document}
+     \sloppy  %Justificar las letras no separadas.
+%  \frontmatter    % INCLUYE: TITULO, PROLOGO
+
+% CUERPO PRELIMINAR(I)
+  \include{Capitulos/0_Portada}
+
+%  \mainmatter     	
+  \include{Capitulos/1_PlanteamientoProblema}  	
+ \include{Capitulos/2_MarcoTeorico}	
+ \include{Capitulos/3_MetodoInvestigacion}		
+  \include{Capitulos/4_Resultados}	
+  
+  \pagestyle{Conclusiones}
+  \include{Capitulos/5_Conclusiones}		%CONCLUSIONES
+  
+%%% BIBLIOGRAFÍA
+	\pagestyle{RB}
+	%\medskip
+	%\nocite{*}
+%-Bibliografia 1 
+	%\printbibliography
+	
+%-Bibliografia 2 
+	\printbibheading
+	%\printbibliography[heading=subbibintoc,keyword={SI},title={Ingeniería de Presas}] 
+	\printbibliography[heading=subbibintoc,keyword={SI}]%,title={Ingeniería Sísmica}]
+	%\printbibliography[heading=subbibintoc,keyword={FE},title={Elementos Finitos}]	
+	%\printbibliography[heading=subbibintoc,keyword={OT},title={Otros}]
+    
+\newpage    
+\anexo
+\include{Capitulos/6_Anexos}	
+ 
+
+\end{document}
