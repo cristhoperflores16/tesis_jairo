@@ -55,6 +55,7 @@
     \definecolor{Grey2}{gray}{0.9}
     \definecolor{AzulA}{RGB}{227,242,250}
     \definecolor{AzulC}{RGB}{0,105,178}
+    
 
 %--------------------------------------------------------------------------------
 %  4-PAQUETES GENERALES
@@ -939,9 +940,10 @@
 
 
     \titleformat{\chapter}[block]
-   % \titlespacing*{\chapter}{0pt}{0pt}{20pt}
+   % \titlespacing*{\chapter}{0pt}{0.0pt}{10pt}
         {}
         {
+        %\vspace*{-1cm}
             \color{black} \bf \fontsize{\titA}{15}\selectfont  \nTCapitulo\ \scalebox{1.2}{\thechapter} \\[4.5mm]
         }
         {0pt}
@@ -1318,6 +1320,29 @@
             [\addvspace{-2mm}]
 
 %->INDICE DE TABLAS--------------------------------------------------------------
+
+
+    \RequirePackage{adjustbox}
+    \RequirePackage{booktabs}
+    \RequirePackage{longtable} % para tablas largas
+    \RequirePackage{array,makecell,multirow}
+    \RequirePackage{colortbl}
+    \newcommand{\toprulec}{\arrayrulecolor{AzulOscuro}\specialrule{0.12em}{\abovetopsep}{0pt}%
+                \arrayrulecolor{gray!10}\specialrule{\belowrulesep}{0pt}{0pt}%
+                \arrayrulecolor{black}}
+    \newcommand{\midrulec}{\arrayrulecolor{AzulClaro}\specialrule{\aboverulesep}{0pt}{0pt}%
+                \arrayrulecolor{blue}\specialrule{\lightrulewidth}{0pt}{0pt}%
+                \arrayrulecolor{white}\specialrule{\belowrulesep}{0pt}{0pt}%
+                \arrayrulecolor{blue}}
+    \newcommand{\bottomrulec}{\arrayrulecolor{AzulOscuro}\specialrule{0.12em}{\abovetopsep}{0pt}%
+                \arrayrulecolor{white}\specialrule{\belowrulesep}{0pt}{0pt}%
+                \arrayrulecolor{blue}}
+    \newcommand{\rowc}{\rowcolor{gray!10}}
+    \newcommand{\rowg}{\rowcolor{Grey}}
+    \newcommand{\thesistablefont}{\normalfont\bfseries}
+    
+    
+    
     \def \nITablas{}
     \def \nITablas#1{\gdef\nITablas{#1}}
     \def \nTTabla{}
