@@ -1,0 +1,624 @@
+
+\chapter{Marco Teórico.}
+
+%=======================================================================================================================
+\section{Antecedentes.}
+
+\subsection{Investigaciones Internacionales}
+\textcite{TC2022kim} .Ofrece una revisión exhaustiva de los métodos automatizados para detectar baches, analizando sus fortalezas y debilidades (Métodos basados en visión – Métodos basados en vibración – Métodos basados en reconstrucción 3D) en carreteras, un problema crítico para la seguridad vial y el mantenimiento de infraestructuras. Los baches, tráfico pesado o condiciones climáticas, generan riesgos significativos, como daños a vehículos, reducción de la velocidad de conducción y accidentes de tráfico. En países como Estados Unidos y Reino Unido, los costos asociados a reparaciones superan los miles de millones de dólares anuales, lo que subraya la necesidad de métodos de detección eficientes y automatizados frente a las inspecciones visuales manuales tradicionales, que son costosas, subjetivas y lentas.\\
+
+\noindent \textcite{TC2018lim} .Desarrollaron métodos automatizados de detección de baches usando aprendizaje profundo con imágenes de bases de datos públicas como Flickr, Google Imágenes y Pixabay. Etiquetaron baches con cuadros delimitadores y entrenaron dos modelos basados en YOLOv2, modificados con cuadros de anclaje y una cuadrícula más densa adaptada a la resolución de las imágenes. Estos modelos superaron al YOLOv2 original en precisión, recuperación y FPS, al reducir capas y ajustar los cuadros de anclaje. Sin embargo, la aplicación en vehículos fue limitada por el tamaño reducido del conjunto de datos, proponiendo como futuro trabajo la detección en tiempo real con más datos\\
+
+\noindent \textcite{TC2020baek} .Propusieron un método para detectar y clasificar baches basado en detección de bordes con imágenes de pavimento. El método incluye tres fases: preprocesamiento (conversión a escala de grises y detección de objetos no baches), extracción de contornos de baches mediante detección de bordes, y clasificación de daños usando el algoritmo YOLO. La evaluación mostró un error cuadrático medio (MSE) de 0.2 a 0.44 para distorsión y restauración, con una exactitud y precisión promedio de 0.7786 y 0.8345, respectivamente. La detección es precisa para un solo bache por imagen, pero menos efectiva con múltiples baches, y no estima bien el tamaño real. Los autores sugieren mejorar la extracción de características para predecir tamaños reales como trabajo futuro.\\
+
+\noindent \textcite{TC2018baoxian} .Presenta un algoritmo automatizado para detectar y mejorar grietas en pavimentos usando imágenes 3D de alta resolución (1 mm/píxel), obtenidas con escáneres láser. Diseñado para superar limitaciones de métodos 2D (sensibilidad a iluminación y ruido), el método procesa datos de profundidad y textura en un pipeline de cuatro etapas: 1: Preprocesamiento: Elimina ruido con un filtro bilateral y corrige distorsiones geométricas mediante rectificación de planos 2: Segmentación inicial: Aplica un banco de filtros dirigibles (SMFB) para detectar grietas lineales y curvas, generando un mapa binario de saliencia. 3: Mejora de continuidad: Usa votación tensorial 2D para conectar grietas discontinuas, suavizando trayectorias y eliminando ruido 4: Postprocesamiento: Refina bordes y extrae métricas (longitud, ancho, densidad) mediante esqueletización. el algoritmo logra un F1-Score de 91.1$\%$ (mejorando 10-15$\%$ sobre métodos como Canny, CrackTree y CNN básicas) y un error de longitud de 1.2 mm/m. Es eficiente (~5-10 segundos por imagen) y robusto ante ruido, pero depende de la calidad de los datos 3D y tiene limitaciones con grietas anchas (>10 mm). Este enfoque, integrable en sistemas de gestión de pavimentos, reduce el tiempo de inspección en un 80$\%$ y sienta bases para futuras aplicaciones de IA en mantenimiento vial.\\
+
+\noindent \textcite{TC2018haifeng} .Propone el algoritmo no supervisado Multi-scale Fusion Crack Detection (MFCD) para detectar grietas en pavimentos mediante imágenes, abordando desafíos como variaciones de iluminación, formas irregulares de grietas, bajo contraste y fondos ruidosos (sombras, manchas, texturas). A diferencia de métodos tradicionales (umbralización, filtros morfológicos) o supervisados (SVM, CNN), que son sensibles al ruido o requieren datos etiquetados, MFCD no necesita entrenamiento previo y combina información multi-escala para lograr robustez y eficiencia.Los resultados muestran que MFCD supera significativamente a métodos baseline en múltiples métricas. En términos de segmentación píxel a píxel, logra un F1-score de 0.82 a 0.85, mejorando en un 12-18$\%$ a métodos no supervisados como detección de bordes (Canny, F1 $\thickapprox$ 0.75) y en un 5-10 a enfoques supervisados basados en CNN (F1 $\thickapprox$ 0.78). En detección de grietas, alcanza una precisión de detección (Pd) del 92$\%$ con una tasa de falsos positivos (Pf) del 5$\%$, comparado con un Pd de 85$\%$ y Pf de 8-10$\%$ en métodos morfológicos. La fusión multi-escala es clave, ya que pruebas de ablación muestran que usar una sola escala reduce el F1-score en un 15-20$\%$\\
+
+\noindent \textcite{TC2021maji} .Propusieron un método de detección de baches basado en CNN (Redes convolucionales), integrado en un prototipo de vehículo con cámara monocular y Raspberry Pi. El sistema incluye módulos de detección de baches, procesamiento de datos y vehículo autónomo. Usaron 3915 imágenes (aumentadas desde 783 mediante técnicas como volteo y rotación) para entrenar el modelo. Evaluado con un conjunto de datos público, logró una exactitud de 0.9902, precisión de 0.9903, recuperación de 0.9903 y F1 de 0.9833, superando métodos existentes. La optimización de la CNN permitió un buen rendimiento, sugiriendo viabilidad para detección en tiempo real con dispositivos de bajo costo como Jetson Nano NVIDIA\\
+
+\noindent \textcite{TC2024mario} .Propone un modelo basado en la arquitectura transformer Segformer para detectar automáticamente agrietamientos y baches en carreteras, superando limitaciones de métodos manuales y tradicionales sensibles a ruido ambiental (sombras, iluminación variable). Se creó un base de datos de 245 imágenes capturadas en Culiacán, México, ampliado a 2052 mediante aumento de datos (rotación, tiling), con anotaciones manuales para segmentación semántica. El preprocesamiento incluyó estiramiento de contraste, conversión a escala de grises y redimensión a 512x512 píxeles. Segformer, entrenado en un servidor con RTX 3060 Ti, logró un recall del 96.55$\%$, precisión del 82.35$\%$, F1 Score del 88.89$\%$ y Mean IoU del 67$\%$, superando a métodos como Otsu, Canny/Sobel y CNN en entornos ruidosos. El modelo destaca por su robustez y el dataset aporta diversidad para investigaciones futuras. Se sugiere expandir el dataset, clasificar severidad de deterioros y explorar detección automática de anotaciones o pavimentos rígidos.\\
+
+%\noindent \parencite{TC2024mario} .Presentan un estudio en el que presentan una arquitectura de evaluación completo que identifica y cuantifica baches, además de determinar la prioridad de su reparación y sugerir la técnica de reparación más apropiada, apoyando la toma de decisiones fundamentadas para el mantenimiento vial. Los resultados muestran una precisión del 86.8$\%$ y un IoU (Intersección sobre Unión) promedio de 85.872$\%$ en la detección de baches. Un IoU más elevado refleja una mayor exactitud en la delineación de los contornos de los baches, lo que mejora la precisión en la medición de sus dimensiones, como diámetro y área.\\
+
+
+\subsection{Investigaciones Nacionales}
+
+
+\noindent \textcite{TC2021pedro} .Propone un sistema electrónico para detectar baches y topes en carreteras, buscando mejorar la seguridad vial y reducir daños en vehículos autónomos o manuales, especialmente en contextos latinoamericanos donde las vías urbanas presentan defectos persistentes. Los baches, identificados como obstáculos estáticos, causan accidentes, muertes y desgaste vehicular, agravados por la lenta reparación de infraestructura. El objetivo es diseñar e implementar un sistema que combine sensores (cámara ZED estéreo, LIDAR, ultrasónicos) con algoritmos de inteligencia artificial (aprendizaje de máquina, transformada wavelet, filtros probabilísticos) para detectar y clasificar anomalías en el pavimento en tiempo real.\\
+
+\noindent \textcite{llamkasun2021} .Analiza métodos tradicionales y emergentes para evaluar pavimentos viales, destacando su importancia para el desarrollo económico y social al garantizar movilidad segura y eficiente. Mediante una revisión bibliográfica, el estudio compara técnicas funcionales (IRI, PCI, PSI, SDI) y estructurales (Viga Benkelman, FWD) con tecnologías modernas como drones, georadar, inteligencia artificial y GIS. Los métodos tradicionales, aunque económicos, son laboriosos y menos precisos, mientras que las tecnologías emergentes ofrecen alta precisión (hasta 95$\%$), datos en tiempo real y modelado predictivo, pero requieren inversión inicial y capacitación. 
+De estas tecnologías incluye una extensión del 20-40$\%$ en la vida útil de pavimentos, reducción de costos de mantenimiento (30-50$\%$), mayor seguridad vial y accesibilidad en zonas rurales, especialmente en Perú, donde se optimiza el transporte de mercancías. Los autores recomiendan integrar ambos enfoques, capacitar técnicos locales y realizar estudios piloto en regiones andinas para adaptar soluciones a condiciones locales, promoviendo un desarrollo vial sostenible e inteligente.\\
+
+\noindent \textcite{jorge2022} .Evalúa el estado superficial de una vía urbana en Piura con pavimentos flexible (asfáltico) y rígido (concreto), utilizando drones y fotogrametría para calcular el Índice de Condición del Pavimento (PCI). El objetivo es optimizar la inspección, reducir costos y tiempos, e identificar fallas para proponer mantenimiento. La metodología incluye vuelos de drones para capturar imágenes georreferenciadas, procesadas con Agisoft Metashape para generar ortofotos y modelos 3D, y la aplicación del método PCI (ASTM), que clasifica el pavimento de 0 (muy pobre) a 100 (excelente). La vía se dividió en tres tramos: Tramo 1 y 3 (flexible, PCI $\sim$ 82-85, buena/excelente) muestran grietas longitudinales y desprendimientos; Tramo 2 (rígido, PCI >90, excelente) presenta bombeo leve. El PCI global ($\sim$ 83) indica buen estado, pero un 6 de áreas con PCI \\
+
+\noindent \textcite{Chino2024} .Aborda la detección automática de anomalías en pavimentos (grietas, baches, hundimientos) mediante inteligencia artificial en el distrito de Socabaya, Arequipa. Motivado por los altos costos y la subjetividad de las inspecciones manuales, el estudio propone una aplicación móvil que utiliza redes neuronales convolucionales (CNN), basadas en modelos como MobileNet, para procesar imágenes capturadas por smartphones en tiempo real. La metodología incluyó recolección de imágenes locales, entrenamiento de modelos con frameworks como TensorFlow o PyTorch, y evaluación con métricas como precisión y F1-Score, logrando una detección eficiente (estimada >90$\%$ ) y una mejora del 40-50$\%$  en tiempo frente a métodos tradicionales. La aplicación, desarrollada para Android/iOS, permite priorizar el mantenimiento vial predictivo, reduciendo costos y mejorando la seguridad. Se recomienda expandir el dataset con drones, integrar con sistemas GIS y capacitar a inspectores locales para su implementación en la municipalidad. La tesis destaca por su aporte a la sostenibilidad urbana y su adaptabilidad a contextos peruanos, con potencial escalabilidad a otros distritos.\\
+
+\noindent \textcite{zamora2024} .Desarrolla un sistema embebido vehicular para detectar y clasificar baches en vías urbanas, superando la ineficiencia de inspecciones manuales. Utiliza una Raspberry Pi 4B, cámaras Logitech C270, GPS y Wi-Fi, con carcasas de ABS impresas en 3D y alimentación DC-DC desde la batería del vehículo. El sistema graba videos a $\leq$20 km/h, sincroniza datos a OneDrive y procesa offline en un escritorio usando ResNet50 para detección (74.38$\%$ recall) y DeepLabV3+ para segmentación (79.19$\%$ IoU en validación), calculando diámetros y clasificando baches por gravedad según normas del MTC (50 cm: alta). MQTT coordina dispositivos, y resultados se visualizan en Google Maps. El diseño evita vibración y borrosidad, con procesamiento offline optimizando recursos. Comparado con métodos manuales, es más rápido y objetivo, aunque depende de un escritorio potente. Recomienda conducción cuidadosa, capacitación en GUIs y verificación de sincronización en nube.\\
+
+
+\noindent \textcite{gastelu2025} .La tesis “Implementación de un método mediante visión artificial para la evaluación del estado de conservación superficial de pavimentos flexibles, Ayacucho 2024” desarrolló y validó un sistema automatizado que reemplaza las inspecciones manuales tradicionales (PCI) en carreteras asfaltadas de Ayacucho, Perú. Utilizando más de 1.000 imágenes capturadas con drones, cámaras vehiculares y celulares, y aplicando técnicas de visión artificial (OpenCV, redes CNN y U-Net para detección y segmentación, y deep learning para clasificación), el método detecta y clasifica con 92 $\%$ de precisión grietas, baches, desprendimientos y pulimento, asignando severidad y calculando un índice de condición. Comparado con evaluaciones manuales, logró 88 $\%$ de concordancia, pero redujo hasta un 80 $\%$ el tiempo de inspección. Los pavimentos estudiados presentaron estado promedio “regular”, con predominio de grietas por fatiga y baches, requiriendo mantenimiento urgente en el 70 $\%$ de los tramos. Se concluye que la solución es objetiva, rápida, económica y escalable, recomendándose su adopción por entidades viales peruanas para optimizar la conservación de la infraestructura.
+
+\section{Bases teóricas}
+
+\subsection{Conservación vial}
+
+La conservación vial se refiere al conjunto de actividades y procesos destinados a mantener, reparar y preservar la infraestructura vial y sus elementos asociados (como puentes, señalización, obras de arte) en óptimas condiciones de funcionalidad, seguridad y durabilidad. Su objetivo es prolongar la vida útil de las infraestructuras viales, garantizar la seguridad de los usuarios y minimizar los costos a largo plazo mediante el mantenimiento preventivo y correctivo.\\
+Se entiende por conservación vial al conjunto de actividades técnicas, de naturaleza periódica o rutinaria, que deben realizar los organismos responsables de la gestión vial para cuidar las vías y mantenerlas en estado óptimo de operación. Estas acciones tienen como propósito inmediato brindar fluidez al tránsito vehicular en todas las épocas del año, pero también, en un sentido más amplio, buscan proporcionar comodidad y seguridad a los usuarios y preservar las inversiones efectuadas en la construcción o rehabilitación de los caminos.\textcite{Salomon2009}\\
+La conservación vial es un proceso que involucra actividades de obras e instalaciones, que se realizan con carácter permanente o continuo en los tramos conformantes de una red vial \textcite{ManualCarreteras2018}, Estas actividades se clasifican en:
+
+%\begin{itemize}[label=\HandRight]
+%	\item Mantenimiento Rutinario
+%	\item Mantenimiento Periódico
+%\end{itemize}
+\subsubsection{Mantenimiento Rutinario}
+
+Es el conjunto de tareas realizadas de forma continua a lo largo de la vía, que se realizan diariamente en sus distintos tramos, con el objetivo principal de preservar todos los elementos del camino, minimizando alteraciones o daños y, en lo posible, manteniendo las condiciones originales tras su construcción o rehabilitación. Este mantenimiento es de carácter preventivo e incluye actividades como la limpieza de obras de drenaje, el control de vegetación y la reparación de defectos puntuales en la plataforma, entre otras. En los sistemas de mantenimiento vial tercerizados, también se incorporan acciones socioambientales, la atención de emergencias viales menores y la vigilancia y cuidado de la vía.\\
+\noindent Según  \textcite{ManualCarreteras2018} Es el conjunto de actividades que se realizan en las vías con carácter permanente para conservar sus niveles de servicio. Estas actividades pueden ser manuales o mecánicas y están referidas principalmente a labores de limpieza, bacheo, perfilado, roce, eliminación de derrumbes de pequeña magnitud; así como, limpieza o reparación de juntas de dilatación, elementos de apoyo, pintura y drenaje en la superestructura y subestructura de los puentes.
+
+\begin{enumerate}
+	\item Limpieza de cunetas, alcantarillas y sistemas de drenaje.
+	\item Corte y control de vegetación en derecho de vía y taludes.
+	\item Reparación de baches menores y sellado de fisuras superficiales.
+	\item Mantenimiento de señalización horizontal y vertical (limpieza y reposición menor).
+\end{enumerate}
+
+\noindent En la ciudad de Ayacucho, el gobierno regional de Ayacucho a cargo de la Dirección regional de transportes y comunicaciones de Ayacucho, es la institución encargada del mantenimiento, en el presente año se vienen ejecutando los mantenimientos rutinarios de los siguientes tramos
+
+%\begin{table}[H]
+%	\centering
+%	\label{tab:Rutinario}
+%	\scalebox{0.4}{
+	%	\begin{tabular}{|m{0.5cm}|m{3cm}|m{3cm}|m{3cm}|m{3cm}|m{3cm}|p{5cm}|}
+		%	
+		%		\hline
+		%		\multicolumn{7}{|c|}{\textbf{Mantenimiento Rutinario}}\\
+		%		\hline
+		%		$N^{o}$&\centering Pliego&\centering Departamento&\centering Provincia&\centering Distrito&\centering Código de Ruta&Denominación según SINAC\\
+		%		\hline
+		%		\centering\arraybackslash 1 &
+		%		\centering\arraybackslash Gobierno Regional de Ayacucho &
+		%		\centering\arraybackslash Ayacucho &
+		%		\centering\arraybackslash Huanta &
+		%		\centering\arraybackslash Chaca Santillana&
+		%		\centering\arraybackslash AY-100 &
+		%		Emp. PE-3S (Huanta) - Luricocha - Abra Huatuscalla - Huayllay - Abra Torongana - San José de Secce - Jasarayac - Rodeo - Mashuacanche - Putis - Pampa Aurora - Emp. PE-28 H (Dv. Canayre)\\
+		%		\hline
+		%		2&
+		%		\centering Gobierno Regional de Ayacucho&
+		%		\centering Ayacucho&
+		%		\centering Vilcas Huaman&
+		%		\centering Saurama&
+		%		\centering AY-104&
+		%		Emp. AY-103 (Dv. Saurama) – Saurama -L.D. Apúrimac (AP-105 a Uranmarca)\\
+		%	\end{tabular}
+	%}
+%
+%\end{table}
+
+
+\apafigura{PERIODICO}{\includegraphics{Figuras/RUTINARIO.pdf}}{0.60}{Mantenimiento Rutinario}{Mantenimiento Rutinario}
+
+
+\subsubsection{Mantenimiento periódico}
+Es el conjunto de tareas realizadas periódicamente, generalmente con una duración superior a un año, destinadas a prevenir la aparición o el deterioro de defectos significativos, mantener las características superficiales, garantizar la integridad estructural de la vía y corregir defectos puntuales relevantes. Ejemplos incluyen la reconstrucción de la plataforma existente y la reparación de diversos elementos físicos del camino. En los sistemas de mantenimiento vial tercerizados, también se incorporan actividades socioambientales, la atención de emergencias viales menores y la vigilancia y cuidado de la vía. (Adaptado del manual de conservación vial)\\
+Según \textcite{ManualCarreteras2018} Es el conjunto de actividades programables que se realizan cada cierto período (anual o cada pocos años) para restaurar o mejorar los niveles de servicio de la vía, corrigiendo daños acumulados que no se resuelven con el rutinario. Estas son intervenciones de mayor envergadura, con equipos especializados y planificación detallada, destinadas a extender la vida útil de la infraestructura 
+\begin{enumerate}
+	\item Recapeo o rehabilitación de pavimentos (asfálticos o no pavimentados).
+	\item Reconstrucción de taludes, estabilización de suelos y refuerzo de plataformas.
+	\item Reparación mayor de puentes, túneles y obras de arte (superestructura y subestructura).
+	\item Renovación completa de demarcaciones y dispositivos de seguridad vial.
+\end{enumerate}
+
+\noindent De la misma manera en el presente año, la Direccion regional de transportes y comunicaciones de Ayacucho viene ejecutando el mantenimiento periódico de las siguientes vías.
+
+\apafigura{PERIODICO}{\includegraphics{Figuras/PERIODICO.pdf}}{0.60}{Mantenimiento Periódico}{Mantenimiento Periódico}
+
+\subsection{Pavimentos}
+
+Un pavimento es la estructura construida sobre la subrasante de la vía, diseñada para soportar cargas de tráfico (peatonal o vehicular) y proporcionar una capa resistente, duradera y estable, esto también sirve para incrementar el nivel de seguridad y comodidad para el transporte terrestre, estos se clasifican en dos: Pavimento asfáltico y Pavimento rígido \\
+\textcite{ManualSuelos2014} El Pavimento es una estructura de varias capas construida sobre la sub rasante del camino para resistir y distribuir esfuerzos originados por los vehículos y mejorar las condiciones de seguridad y comodidad para el tránsito. Por lo general está conformada por las siguientes capas: base, subbase y capa de rodadura, los tipos de pavimentos son los siguientes:
+
+\begin{enumerate}
+	\item Pavimentos flexibles
+	\item Pavimentos semirigidos
+	\item Pavimentos rígidos
+\end{enumerate}
+
+\subsubsection{Pavimento flexible}
+
+\noindent Se denomina pavimento flexible a aquella estructura que es capaz de deflactarse y/o flexionarse dependiendo de las cargas móviles que transitan sobre él. El uso de este tipo de pavimentos se realiza su implementación en zonas con fluctuaciones altas de tráfico como puedan ser vías, aceras o parkings y se caracterizan principalmente por una capa bituminosa, que se apoya de otras capas inferiores llamadas base y subbase.
+
+\noindent Según \textcite{alfonso2001} Este tipo de pavimento estan formados por una carpeta bituminosa apoyada generalmente sobre dos capas no rigidas, la base y la subbase. No obstante puede prescindirse de cualquiera de estas capas dependiendo de las necesidades particulares de cada obra
+
+\apafigura{ubicacion}{\diagramaPavimento[0.4]{13}{true}}{0.65}{Estructura del Pavimento Flexible}{Mantenimiento Rutinario}
+
+\noindent Según el \textcite{ManualSuelos2014} la estructura de los pavimentos flexibles son identificados como los siguientes:\\
+
+\paragraph{Compuestos por capas granulares (sub base y base drenantes)} y una superficie de rodadura bituminosa en frió como: tratamiento superficial bicapa, lechada asfáltica o mortero asfáltico, micro pavimento en frió, macadan asfáltico, carpetas de mezclas asfálticas en frió, etc.
+\paragraph{compuesto por capas granuales (sub base y base drenantes)} y una capa de rodadura bituminosa de mezcla asfáltica en caliente de espesor variable según sea lo necesario
+
+%\subsubsection{Pavimento semirrígido}
+%Conformado por capas asfálticas (base asfáltica y carpeta asfáltica en caliente); también se considera como pavimento semirrígido, la estructura compuesta por carpeta asfáltica en caliente sobre base tratada con cemento o base tratada con cal. Dentro del tipo de pavimento semirrígido, se ha incluido también pavimentos adoquinados. 
+%
+%\begin{figure}[H]
+%	\centering
+%	\hspace*{\fill}
+%	\diagramaPavimentoSemiRigido[0.4]{13}{true}
+%	\hspace*{\fill}
+%	\caption{Estructura del Pavimento Semirrígido}
+%	\source{(Pavimentos-Ing Claudio Giordani)}
+%\end{figure}
+%\subsubsection{Pavimentos rígidos}
+%Conformados por losas de concreto de cemento hidráulico y una subbase granular para uniformizar las características de cimentación de la losa
+%\begin{figure}[H]
+%	\centering
+%	\hspace*{\fill}
+%	\diagramaPavimentoRigido[0.4]{13}{true}
+%	\hspace*{\fill}
+%	\caption{Estructura del Pavimento SemiRígido}
+%	\source{(Pavimentos-Ing Claudio Giordani)}
+%\end{figure}
+
+\subsection{Falla en pavimentos flexibles}
+
+Estos sistemas se integran por capas granulares (subbase y base) más una capa de rodadura elaborada con materiales bituminosos, aglomerantes, agregados y, eventualmente, otros componentes.\\
+Dicha capa de rodadura está formada habitualmente por asfalto y se dispone sobre las capas granulares. Entre sus formas más comunes se encuentran el mortero asfáltico, el tratamiento superficial bicapa, los micropavimentos, el macadam asfáltico y las mezclas asfálticas en frío o en caliente.
+
+Según \textcite{Franklin2019} Cuando se realiza la inspección de daños, debe evaluarse la calidad de tránsito (o calidad del viaje) para determinar el nivel de severidad respectivo. La calidad de tránsito se determina recorriendo la sección de pavimento en un automóvil de tamaño estándar a la velocidad establecida por el límite legal. Las secciones de pavimento cercanas a señales de detención deben calificarse a la velocidad de desaceleración normal de aproximación a la señal.
+
+Según \textcite{Evaluacion2009}Durante la vida de servicio de un pavimento, causas de diverso origen afectan la condición de la superficie de rodamiento, lo cual compromete su función de ofrecer a los usuarios la posibilidad del un rodaje seguro, cómodo y económico. Entre las causas de falla de un pavimento se
+pueden mencionar:
+\begin{enumerate}
+	\item Fin del período de diseño original y ausencia de acciones de rehabilitación mayor durante el mismo. En este caso la falla es la prevista o esperada.
+	\item  Incremento del tránsito con respecto a las estimaciones del diseño de pavimento 	original
+	\item Deficiencias en el proceso constructivo, bien en procesos como tal como en la calidad de los materiales empleados.
+	\item Diseño deficiente (errores en la estimación del tránsito o en la valoración de las propiedades de los materiales empleados).
+	\item Factores climáticos imprevistos (lluvias extraordinarias).
+	\item Insuficiencia de estructuras de drenaje superficial y/o subterráneo.
+	\item Insuficiencia o ausencia de mantenimiento y/o rehabilitación de pavimentos.
+\end{enumerate}
+\vspace{0.5cm}
+\noindent Según el \textcite{ManualCarreteras2018}l para el caso de pavimentos de superficie de asfalto se alistan los siguientes tipos de deterioros o fallas
+\subsection{Tipos de Deterioro:}
+\subsubsection{Clasificación de los deterioros o fallas}
+
+Las fallas en pavimentos son los daños, defectos o alteraciones visibles e invisibles que aparecen en la superficie o en las capas internas de la estructura vial (capa de rodadura, base, subbase o subrasante) durante su vida de servicio. Estos daños reducen la capacidad estructural, la comodidad, la seguridad y la funcionalidad del pavimento, provocando irregularidades, pérdida de material, agrietamientos, deformaciones o desintegración 
+
+\noindent Las fallas de los pavimentos flexibles pueden clasificarse en dos grandes categorías: \textbf{fallas estructurales} y los \textbf{fallas superficiales}. Las fallas de la primera categoría se asocian generalmente con obras de rehabilitación de costo alto. Los fallas de la segunda categoría se relacionan generalmente con obras de mantenimiento periódico (por ejemplo, carpeta delgada de concreto asfáltico o tratamiento superficial).\textcite{ManualCarreteras2018}
+
+\subsubsection*{Tipos y causas de los daños estructurales}
+Los deterioros estructurales caracterizan un estado estructural del pavimento, concerniente al conjunto de las diferentes capas del mismo o bien solamente a la capa de superficie.
+Las cargas circulantes resultan generalmente en:
+
+\begin{itemize}[label=\HandRight]
+	\item Deformaciones verticales elásticas del material de las capas granulares y del suelo de la subrasante.
+	\item Deformaciones horizontales elásticas de tensión por flexión en la parte inferior de las capas asfálticas.
+\end{itemize}
+Si la deformación vertical de las gravas y/o suelos excede el límite admisible, se observan deformaciones permanentes del pavimento (hundimiento o ahuellamiento de gran radio). Si la deformación horizontal de tensión por flexión en la parte inferior de las capas asfálticas excede el límite admisible, dichas capas se fisuran en su parte inferior y las fisuras luego se propagan hasta la superficie: fisuras longitudinales en las huellas del tránsito y fisura en forma de piel de cocodrilo.\\
+Los deterioros o fallas (deformación y/o fisuración) no aparecen de inmediato (en general), sino al cabo de la repetición de cargas definida por la curva de fatiga de cada material.
+
+
+\paragraph{DETERIORO / PIEL DE COCODRILO}
+
+	La piel de cocodrilo está constituida por fisuras que forman polígonos irregulares de ángulos agudos. Puede ser en su principio, poco grave, mostrando polígonos incompletos dibujados en la superficie por fisuras cerradas (es decir, de ancho nulo). El tamaño de la malla disminuye luego bajo el efecto de las condiciones climáticas y del tráfico. Las fisuras se abren y se observan pérdidas de material en sus bordes, entre las consecuencias del fenómeno de fatiga de las capas asfálticas sometidas a una repetición de cargas superior a la permisible. Es indicativo de insuficiencia estructural del pavimento. Esta falla comienza en la parte inferior de las capas asfálticas. La fisuración se propaga a la superficie
+	\paragraph*{Niveles de gravedad:} El criterio principal es el orden de magnitud de la malla 
+	
+	\begin{enumerate}
+		\renewcommand{\labelenumi}{\alph{enumi})} 
+		\item Malla grande (>0.5 m) sin material suelo
+		\item Malla mediana (entre 0.3 y 0.5 m) sin o con material suelto
+		\item Malla pequeña (<0.3 m) sin o con material suelto
+	\end{enumerate}
+
+	\apafigura{Piel de cocodrilo}{\includegraphics{Figuras/pieldecocodrilo.jpg}}{0.70}{Piel de cocodrilo}{Manual de Carreteras Mantenimiento o Conservación Vial}
+
+\paragraph{DETERIORO/ FISURAS LONGITUDINALE}
+
+	En este rubro se incluyen las fisuras longitudinales de fatiga. Discontinuas y únicas al inicio, evolucionan rápidamente hacia una fisuración continua y muchas veces ramificada antes de multiplicarse debido al tráfico, hasta convertirse en muy cerradas, entre las consecuencias del fenómeno de fatiga de las capas asfálticas sometidas a una repetición de cargas superior a la permisible. Es indicativo de insuficiencia estructural del pavimento. Esta falla comienza en la parte inferior de las capas asfálticas. La fisuración se propaga a la superficie
+	\paragraph*{Niveles de gravedad:} El criterio principal es el orden de magnitud de la malla 
+	\begin{enumerate}
+		\renewcommand{\labelenumi}{\alph{enumi})} 
+		\item Fisuras finas en las huellas del tránsito (ancho $\leq$ 1 mm)
+		\item Fisuras medias, corresponden a fisuras abiertas y/o ramificadas (ancho > 1 mm y $\leq$ 3 mm)
+		\item Fisuras gruesas, corresponden a fisuras abiertas y/o ramificadas (ancho > 3 mm). También se denominan grietas.
+	\end{enumerate}
+
+	\apafigura{Falla longitudinal}{\includegraphics{Figuras/fallalongitudinal.jpg}}{0.70}{Falla longitudinal}{Manual de Carreteras Mantenimiento o Conservación Vial}
+
+\paragraph{DETERIORO/ DEFORMACIÓN POR DEFICIENCIA ESTRUCTURAL}
+
+	Las deformaciones propias de los pavimentos flexibles se caracterizan, en la casi totalidad de los casos, por:
+	\begin{itemize}[label=\HandRight]
+		\item Las deformaciones por deficiencia estructural, depresiones continuas (deterioro 3a) o localizadas (deterioro 3b)
+		\item El ahuellamiento (deterioro 4) relacionado con el comportamiento inestable de la capa de rodadura.
+	\end{itemize}
+	En todos los casos, su gravedad es anotada por la profundidad medida sobre una regla rígida de 1.50 m de longitud colocada transversalmente en la calzada. El presente rubro se refiere a las deformaciones por deficiencia estructural.\\
+	La depresión continua aparece en el trazado de las ruedas, en un ancho superior a 0.8 m, sobre los laterales del pavimento de 0.5 a 0.8 m del borde, debido al asentamiento de los materiales de una o varias capas del pavimento y de la subrasante bajo un tráfico pesado y canalizado.	La depresión localizada es un hundimiento de la superficie del pavimento en un área localizada del mismo. Concierne generalmente a la totalidad del borde del pavimento. Es una consecuencia del defecto de soporte o de estabilidad debido a una mala calidad de los materiales o a un contenido de agua excesivo, entre las causas Los deterioros o fallas 3a y 3b son consecuencias del fenómeno de fatiga de una o varias capas del pavimento y de la subrasante sometidas a una repetición de cargas superior a la permisible. Es indicativo de insuficiencia estructural del pavimento.
+	\paragraph*{Niveles de gravedad:} El criterio principal es el orden de magnitud de la malla 
+	\begin{enumerate}
+		\renewcommand{\labelenumi}{\alph{enumi})} 
+		\item Profundidad sensible al usuario < 2 cm
+		\item Profundidad entre 2 cm y 4 cm
+		\item Profundidad $\geq$ 4 cm
+	\end{enumerate}
+	
+	
+	\apafigura{Deficiencia Estructural}{\includegraphics{Figuras/deficienciaestructural.jpg}}{0.70}{Deficiencia Estructural}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	
+\paragraph{DETERIORO/ AHUELLAMIENTO}
+
+	Las deformaciones propias de los pavimentos flexibles se caracterizan, en la casi totalidad de los casos, por:
+	\begin{itemize}[label=\HandRight]
+		\item Las deformaciones por deficiencia estructural, depresiones continuas (deterioro 3a) o localizadas (deterioro 3b)
+		\item El ahuellamiento (deterioro 4) relacionado con el comportamiento inestable de la capa de rodadura.
+	\end{itemize}  
+	En todos los casos, su gravedad es anotada por la profundidad medida sobre una regla rígida de 1.50 m de longitud colocada transversalmente en la calzada. El presente rubro se refiere a las deformaciones por comportamiento visco-elástico de la capa de rodadura (deterioro 4). La huella aparece en el trazado de las ruedas, en un ancho inferior a 0.8 m, sobre los laterales del pavimento de 0.5 a 0.8 m del borde, debido a un comportamiento viscoelástico de las de la capa de rodadura bajo un tráfico pesado y canalizado, entre las causas se tiene defecto e dosificación de asfalto, inadecuación entre el tipo de asfalto y la temperatura de la capa de rodadura, inadecuación entre la gradación de los agregados y la temperatura de la capa de rodadura, inadecuación entre la gradación de los agregados y la clase de tránsito.
+	\paragraph*{Niveles de gravedad:} El criterio principal es el orden de magnitud de la malla 
+	\begin{enumerate}
+		\renewcommand{\labelenumi}{\alph{enumi})}
+		\item Profundidad $\leq$ 6 mm
+		\item Profundidad > 6 mm y $\leq$ 12 mm
+		\item Profundidad > 12 mm.
+	\end{enumerate}
+	
+	\apafigura{Ahuellamiento}{\includegraphics{Figuras/ahuellamiento.jpg}}{0.70}{Ahuellamiento}{Manual de Carreteras Mantenimiento o Conservación Vial}	
+	
+\paragraph{DETERIORO/ REPARACIONES O PARCHADO}
+
+	Las reparaciones están destinadas a mitigar los defectos del pavimento, de manera provisional o definitiva: su número, su extensión y su frecuencia son elementos del diagnóstico. Una reparación reciente enmascara un problema, reparaciones frecuentes lo subrayan. Las reparaciones deben ser calificadas en el momento del examen visual, pues algunas de ellas son tomadas en cuenta para determinar el estado estructural del pavimento. Si la reparación se aplica a deterioros / fallas superficiales y erradica el defecto, no se usará para calificar el estado estructural del pavimento. Si se aplica a la fisuración estructural, se considera como factor agravante. Dichos criterios resultan en los niveles de gravedad definidos más abajo, entre las causas Las reparaciones son indicativas de insuficiencia estructural del pavimento de deterioros/fallas superficiales. No requieren medidas correctivas.
+	\paragraph*{Niveles de gravedad:} El criterio principal es el orden de magnitud de la malla 
+	\begin{enumerate}
+		\renewcommand{\labelenumi}{\alph{enumi})}
+		\item Reparación o parchado para deterioros/ fallas superficiales
+		\item Reparación de piel de cocodrilo o de fisuras longitudinales, en buen Estado
+		\item Reparación de piel de cocodrilo o de fisuras longitudinales, en mal estado.
+	\end{enumerate}
+	
+	\apafigura{Reparaciones o parchado}{\includegraphics{Figuras/parchado.jpg}}{0.70}{Reparaciones o parchado}{Manual de Carreteras Mantenimiento o Conservación Vial}
+
+
+
+\subsubsection*{Tipos y causas de los daños Superficiales}
+Los deterioros superficiales se originan en general por un defecto de construcción, por un defecto en la calidad de un producto o por una condición local particular que el tráfico acentúa. Además, pueden resultar de la evolución de deterioros o fallas estructurales.\\
+Se distinguen:
+
+\begin{itemize}[label=\HandRight]
+	\item Los desprendimientos
+	\item Los baches (huecos)
+	\item Las fisuras transversales (que no resultan de la fatiga del pavimento)
+\end{itemize}
+
+\setcounter{paragraph}{0}
+\paragraph{DETERIORO/ PELADURA Y DESPRENDIMIENTO}
+
+Este periodo incluye:
+	\begin{itemize}
+		\item la desintegración superficial de la carpeta asfáltica debido a la pérdida del ligante bituminoso o del agregado (peladura)
+		\item La pérdida total o parcial de la capa de rodadura, (desprendimiento)
+	\end{itemize}
+	
+	Entre las causas probables se tienen
+	
+	\begin{itemize}
+		\item Defecto de adherencia del asfalto o de dosificación del mismo
+		\item Asfalto defectuoso o endurecido y perdiendo sus propiedades ligantes
+		\item Agregado defectuoso (sucios o muy absorbentes)
+		\item Defectos de construcción
+		\item Efecto de agentes agresivos (solventes, agua, etc.)
+	\end{itemize}
+	\paragraph*{Niveles de gravedad:}
+	\begin{enumerate}
+		%\renewcommand{\labelenumi}{\alph{enumi})}
+		\item Puntual sin aparición de la base granular (peladura superficial)
+		\item Continuo sin aparición de la base granular o puntual con aparición de la base granular
+		\item Continuo con aparición de la base granular
+	\end{enumerate}
+	
+	\apafigura{Peladura y desprendimientos}{\includegraphics{Figuras/peladura.jpg}}{0.70}{Peladura y desprendimientos}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	
+\paragraph{DETERIORO/ BACHES(HUECOS)}
+
+	Los baches o huecos son consecuencia normalmente del desgaste o de la destrucción de la capa de rodadura. Cuando aparecen, su tamaño es pequeño. Por falta de mantenimiento ellos aumentan y se reproducen en cadena, muchas veces con una distancia igual al perímetro de una rueda de camión, entre las causas, esta falla proviene de la evolución de otros deterioros y carencia de conservación vial 
+	\begin{itemize}[label=\HandRight]
+		\item Desprendimiento 
+		\item Fisuración de fatiga 
+	\end{itemize}
+	\paragraph*{Niveles de gravedad:}
+	\begin{enumerate}
+		\item Diámetro < 0.2 m
+		\item Diámetro entre 0.2 y 0.5 m
+		\item Diámetro > 0.5 m 
+	\end{enumerate}
+	
+	\apafigura{Baches (Huecos)}{\includegraphics{Figuras/baches.jpg}}{0.70}{Baches (Huecos)}{Manual de Carreteras Mantenimiento o Conservación Vial}
+
+\paragraph{DETERIORO/ FISURAS TRANSVERSALES}
+
+	Las fisuras transversales son fracturas del pavimento, transversales (o casi) aleje de la vía, entre las causas se tiene los siguientes:
+	\begin{itemize}[label=\HandRight]
+		\item Retracción térmica de la mezcla asfáltica por pérdida de flexibilidad debido a un exceso de filler o envejecimiento del asfalto
+		\item Reflexión de grietas de capas inferiores y apertura de juntas de construcción defectuosas
+	\end{itemize}
+	\paragraph*{Niveles de gravedad:}
+	\begin{enumerate}
+		\renewcommand{\labelenumi}{\alph{enumi})}
+		\item Finas (ancho $\leq$ 1 mm)
+		\item Fisuras medias corresponden a fisuras abiertas y/o ramificadas (ancho > 1mm $\leq$ 3 mm)
+		\item Fisuras gruesas corresponden fisuras abiertas y/o ramificadas (ancho > 3 mm) también se denominan grietas.
+	\end{enumerate}
+	Fisuras longitudinales y transversales: El nivel 1 corresponde al concepto del AASHTO de «hairline crack» («fisura como un cabello»), se puede considerar que el ancho es generalmente inferior a 1,0 mm. En cuanto a las fisuras abiertas de gravedad 2, se considera que su ancho es generalmente superior a un mm con bordes verticales (sin desintegración de bordes) y menor o igual a 3 mm. Se vuelven gravedad 3 cuando los bordes se desintegran y tienen un ancho superior a 3 mm.
+
+
+\apafigura{Fisuras Transversales}{\includegraphics{Figuras/fisuratransversal.jpg}}{0.70}{Fisuras Transversales}{Manual de Carreteras Mantenimiento o Conservación Vial}
+%\foto{Graficos/fisuratransversal}{Fisuras Transversales}{fig8}{Manual de Carreteras Mantenimiento o Conservación Vial}
+
+\subsection{Conservación de pavimento en calzada}
+La conservación de pavimentos flexibles en calzada y berma, comprende actividades rutinarias y periódicas orientadas a prolongar la vida útil del pavimento, garantizar la transitabilidad, seguridad y confort, y prevenir el deterioro mediante acciones preventivas y correctivas. Las actividades rutinarias incluyen el sellado de fisuras, el parchado superficial y el parchado profundo para atender daños funcionales y estructurales. Las actividades periódicas abarcan el fresado, los tratamientos superficiales y el recapeo asfáltico para restaurar la textura, impermeabilidad y regularidad.\\
+Según el Capítulo 400 del \textcite{ManualCarreteras2018},esta sección establece las especificaciones técnicas para la conservación de pavimentos asfálticos (flexibles) en calzada y bermas. El objetivo es prolongar la vida útil del pavimento, mantener la transitabilidad, seguridad y confort, previniendo el ingreso de agua y deterioros progresivos. Se divide en actividades rutinarias (frecuentes, preventivas) y periódicas (planificadas, correctivas), aplicables a pavimentos flexibles convencionales o modificados. 
+\subsubsection{Actividades rutinarias}
+
+\setcounter{paragraph}{0}
+\paragraph{SELLADO DE FISURAS Y GRIETAS EN CALZADA}
+
+	Consiste en la limpieza de fisuras en calzada (>3 mm) con aire comprimido y el relleno con selladores elastoméricos (emulsión asfáltica modificada con caucho o polímeros) para impedir la infiltración de agua, que acelera el deterioro oxidativo y estructural. Se realiza de forma oportuna, preferentemente antes de periodos de lluvia
+	
+	%\foto{Graficos/fisuralongitudinal}{Fisuras Transversales}{figlongitudinal}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	\apafigura{Fisuras Longitudinal}{\includegraphics{Figuras/fisuralongitudinal.jpg}}{0.70}{Fisuras Longitudinal}{Manual de Carreteras Mantenimiento o Conservación Vial}
+\paragraph{SELLADO DE FISURAS Y GRIETAS EN BERMAS}	
+
+	Limpieza de fisuras y grietas en las bermas con aire comprimido o herramientas manuales, seguida de la aplicación de sellador elastomérico (emulsión asfáltica modificada) para prevenir infiltración de agua y deterioro progresivo. Se realiza de forma localizada y oportuna.\\
+	
+	%{Graficos/selladodefisuras}{Fisuras Transversales}{selladofisuras}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	\apafigura{Sellado de fisuras y grietas en bermas}{\includegraphics{Figuras/selladodefisuras.jpg}}{0.70}{Sellado de fisuras}{Manual de Carreteras Mantenimiento o Conservación Vial}
+\paragraph{PARCHADO SUPERFICIAL EN CALZADA}	
+
+	Reparación localizada de baches o deterioros en la capa asfáltica (profundidad <50 mm). Incluye corte rectangular del área dañada, remoción de material deteriorado, limpieza, aplicación de riego y colocación/ compactación de mezcla asfáltica en caliente o frio, Se ejecutan rápidamente al detectar baches visibles.\\
+	
+	%\foto{Graficos/parchadosuperficial}{Fisuras Transversales}{parchadosuperficial}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	\apafigura{Parchado Superficial}{\includegraphics{Figuras/parchadosuperficial.jpg}}{0.70}{Parchado Superficial}{Manual de Carreteras Mantenimiento o Conservación Vial}
+\paragraph{PARCHADO PROFUNDO EN CALZADA}	
+
+	Reparación de daños estructurales que afectan la carpeta asfáltica, base y/o subbase (profundidad >50 mm). Involucra excavación profunda, remoción de material inestable, reposición y compactación de granular, riego de liga y colocación de capas asfálticas. Prioritario para hundimientos o fatiga por infiltración.\\
+	
+	%\foto{Graficos/parchadoprofundo}{Fisuras Transversales}{parchadoprofundo}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	\apafigura{Parchado Profundo}{\includegraphics{Figuras/parchadoprofundo.jpg}}{0.70}{Parchado Profundo}{Manual de Carreteras Mantenimiento o Conservación Vial}
+\paragraph{ACHEO EN BERMAS CON MATERIAL GRANULAR}	
+
+	Reparación de deterioros en bermas no asfálticas mediante remoción de material dañado, reposición con material granular compactado y perfilado para restaurar la sección transversal y drenaje latera\\
+	
+	%\foto{Graficos/bacheodebermas}{Fisuras Transversales}{figbacheobermas}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	\apafigura{Parchado en bermas con material granular}{\includegraphics{Figuras/bacheodebermas.jpg}}{0.70}{Bacheo en bermas con material granular}{Manual de Carreteras Mantenimiento o Conservación Vial}
+\paragraph{NIVELACIÓN DE BERMAS CON MATERIAL GRANULAR}		
+
+	Consiste en la nivelación y restauración de la geometría de las bermas no asfálticas (granulares o afirmadas) mediante la adición, redistribución y compactación de material granular seleccionado\\
+	
+	%\foto{Graficos/nivelaciondebermas}{Fisuras Transversales}{fignivelacionbermas}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	\apafigura{Nivelacion de bermas con material granular}{\includegraphics{Figuras/nivelaciondebermas.jpg}}{0.70}{Nivelacion de bermas con material granular}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	
+\paragraph{PARCHADO SUPERFICIAL DE BERMAS CON TRATAMIENTO ASFÁLTICO}
+
+	Similar al parchado superficial en calzada, pero aplicado a bermas asfálticas: corte, limpieza y colocación de mezcla asfáltica para reparaciones localizadas superficiales.\\
+	
+	%\foto{Graficos/parchadosuperficialbermas}{Fisuras Transversales}{figbermassuperficial}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	\apafigura{Pachado superficial en bermas}{\includegraphics{Figuras/parchadosuperficialbermas.jpg}}{0.70}{Parchado superficial de bermas con tratamiento asfaltico}{Manual de Carreteras Mantenimiento o Conservación Vial}
+\paragraph{PARCHADO PROFUNDO DE BERMAS CON TRATAMIENTO ASFÁLTICO}		
+
+	Reparación profunda en bermas asfálticas, incluyendo excavación hasta la base, reposición granular si es necesario y aplicación de capas asfálticas para restaurar estructura.
+	
+	%\foto{Graficos/parchadoprofundobermas}{Fisuras Transversales}{figbermasprofundo}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	\apafigura{Parchado profundo de bermas con tratamiento asfaltico}{\includegraphics{Figuras/parchadoprofundobermas.jpg}}{0.70}{Parchado profundo de bermas con tratamiento asfaltico}{Manual de Carreteras Mantenimiento o Conservación Vial}
+
+
+\subsubsection{Actividades periódicas}
+
+\setcounter{paragraph}{0}
+
+\paragraph{SELLOS ASFÁLTICOS}
+
+	Aplicación de tratamientos superficiales como slurry seal o cape seal (lechada asfáltica con agregados) para sellar la superficie, restaurar textura y proteger contra oxidación e infiltración.\\
+	
+	\apafigura{Sellos asfalticos}{\includegraphics{Figuras/selloasfaltico.jpg}}{0.70}{Sellos asfalticos}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	%\foto{Graficos/selloasfaltico}{Fisuras Transversales}{figselladoasfaltico}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	
+\paragraph{RECAPEOS ASFÁLTICOS}	
+
+	Colocación de una nueva capa asfáltica (generalmente 5-10 cm) sobre la existente para recuperar capacidad estructural, uniformidad y durabilidad, con riego de liga previo.\\
+	\apafigura{RECAPEOS ASFALTICOS}{\includegraphics{Figuras/recapeo.jpg}}{0.70}{Recapeos asfalticos}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	%\foto{Graficos/recapeo}{Fisuras Transversales}{figrecapeo}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	
+\paragraph{FRESADO DE CARPETA ASFÁLTICA}	
+
+	Remoción mecánica controlada de la capa asfáltica superior deteriorada con fresadoras para corregir irregularidades y preparar la superficie para recapeo.\\
+	\apafigura{FRESADO DE CARPETA ASFALTICA}{\includegraphics{Figuras/fresado.jpg}}{0.70}{Fresado de carpeta asfáltica}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	%\foto{Graficos/fresado}{Fisuras Transversales}{figfresado}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	
+\paragraph{MICROFRESADO DE CARPETA ASFÁLTICA}	
+
+	Fresado superficial fino (microfresado) para restaurar la macrotextura, mejorar adherencia y eliminar oxidación superficial sin remover gran espesor.\\
+	\apafigura{MICROFRESADO DE CARPETA ASFÁLTICA}{\includegraphics{Figuras/microfresado.jpg}}{0.70}{Microfresado de carpeta asfáltica}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	%\foto{Graficos/microfresado}{Microfresado de carpeta asfáltica}{figmicrofresado}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	
+\paragraph{RECONFORMACIÓN DE BASE GRANULAR EN BERMA}	
+
+	Re perfilado y compactación de la base granular en bermas para restaurar la sección transversal, eliminar deformaciones y mejorar el soporte.\\
+	\apafigura{Reconformación de base granular en berma}{\includegraphics{Figuras/reconformacion.jpg}}{0.70}{Reconformacion de base granular en berma}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	%\foto{Graficos/reconformacion}{Reconformacion de base granular en bermas }{figbermasprofundo}{Manual de Carreteras Mantenimiento o Conservación Vial}
+\paragraph{IMPRIMACIÓN REFORZADA EN BERMAS CON MATERIAL GRANULAR}	
+
+	Aplicación de riego de imprimación bituminosa reforzada sobre bermas granulares para estabilizar y preparar la superficie antes de tratamientos asfálticos.\\
+	%\apafigura{Imprimacion reforzada en bermas con material granular}{\includegraphics{Figuras/imprimacion.jpg}}{0.70}{Imprimacion reforzada en bermas con material granular}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	%\foto{Graficos/imprimacion}{Fisuras Transversales}{figimprimacion}{Manual de Carreteras Mantenimiento o Conservación Vial}
+\paragraph{NIVELACIÓN DE BERMAS CON MEZCLA ASFÁLTICAS}	
+
+	Nivelación y refuerzo de bermas mediante colocación de mezcla asfáltica en caliente para corregir hundimientos y uniformar el perfil con la calzada.
+	\apafigura{Nivelación de bermas con mezcla asfáltica}{\includegraphics{Figuras/microfresado.jpg}}{0.70}{Nivelación de bermas con mezcla asfáltica}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	%\foto{Graficos/nivelacion}{Fisuras Transversales}{fignivelacion}{Manual de Carreteras Mantenimiento o Conservación Vial}
+	
+
+\subsection{Evaluación de Pavimentos}
+La evaluación de pavimentos consiste en un estudio, en el cual se muestra el estado en el que se halla la estructura y la superficie del pavimento, para con esto poder adoptar las medidas adecuadas de conservación y mantenimiento, con las cuales se pretende prolongar la vida útil del pavimento, en este sentido es de suma importancia elegir y realizar una evaluación que sea objetiva y acorde al medio en que se encuentre \textcite{Leguia_pacheco2016}
+
+Actualmente, se dispone de diversos métodos para evaluar la condición superficial de los pavimentos, cuya aplicación no demanda equipos especializados ni procedimientos complejos. Estos métodos se sustentan principalmente en la inspección visual de la superficie, la cual suele desarrollarse en dos etapas: una evaluación preliminar y una inspección detallada orientada a identificar y caracterizar las deficiencias presentes.\\
+A continuación se detalla los métodos de evaluación del interés de la presente investigación 
+\subsubsection{Metodología de Indice de condición de pavimento PCI}
+El PCI es un indicador numérico que valora la condición superficial del pavimento. El PCI proporciona una medida de la condición presente del pavimento basada en las fallas observadas en la superficie del pavimento, que también indican la integridad estructural y condición operacional de la superficie (rugosidad localizada y seguridad). \textcite{T6433D}
+
+El método PCI constituye el modo más completo para la evaluación y calificación objetiva de pavimentos, siendo ampliamente aceptado y formalmente adoptado como procedimiento estandarizado. Se desarrolló para obtener un índice de la integridad estructural del pavimento y de la condición operacional de la superficie, valor que cuantifica el estado en que se encuentra el pavimento para su respectivo tratamiento y mantenimiento.\textcite{Franklin2019}
+
+El deterioro de la estructura de un pavimento depende principalmente del tipo de daño presente, su nivel de severidad y la cantidad o extensión que este ocupa. Para determinar la influencia de estos factores, el método PCI emplea los denominados “valores deducidos”, los cuales permiten asignar una ponderación al deterioro identificado. De esta manera, se representa el grado de afectación que genera cada combinación de tipo de daño, nivel de severidad y cantidad sobre la condición general del pavimento.
+
+\subsubsection{Metodología del Ministerio de Transportes y Comunicaciones (MTC)}
+
+%falta teoria de redes neuronales
+\section{Marco conceptual}
+\subsection{Inteligencia artificial}
+La inteligencia artificial (IA) se refiere al desarrollo y programación de algoritmos, modelos y sistemas que permiten a las computadoras replicar capacidades humanas, como el reconocimiento de patrones (por ejemplo, identificar objetos en imágenes), el procesamiento del lenguaje natural (como en chatbots o traductores) o tomar decisiones (como en juegos o vehículos autónomos). Según John McCarthy, quien acuñó el término en 1956, la IA es "la ciencia e ingeniería de hacer máquinas inteligentes, especialmente programas informáticos inteligentes".
+\subsection{Machine Learning}
+El Machine Learging, una disciplina de la inteligencia artificial (IA), capacita a los sistemas para aprender y optimizarse mediante datos, sin requerir programación explícita para cada función. En vez de depender de reglas predefinidas, estos modelos detectan patrones en la información y los aplican para realizar predicciones, clasificaciones o decisiones, funcionando de la siguiente manera .
+
+\begin{enumerate}
+	\item Datos:Se integra datos (imágenes, texto, números) etiquetados o no, que sirven como base para el aprendizaje.
+	\item Tipos de aprendizaje
+	\begin{itemize}
+		\item Supervisado: Usa datos etiquetados (entrada-salida) para entrenar, como clasificar imágenes de baches.
+		\item No supervisado: Encuentra patrones en datos sin etiquetas, como agrupar clientes por comportamiento.
+		\item Por refuerzo: Aprende mediante prueba y error para maximizar una recompensa, como un robot navegando.
+	\end{itemize}
+	\item Algoritmos: Incluyen redes neuronales (como las convolucionales para visión artificial), árboles de decisión, SVM o regresión logística.
+	\item Entrenamiento: El algoritmo ajusta parámetros internos (pesos) para minimizar errores en las predicciones, usando técnicas determinísticas como el descenso de gradiente. 
+	\item Aplicación: Una vez entrenado, el algoritmo predice o clasifica nuevos datos según la aplicación del diseño. Por ejemplo, en la detección de baches, una red neuronal convolucional analiza imágenes de carreteras, identifica patrones de baches (texturas, bordes) y determina si una nueva imagen contiene un bache.
+\end{enumerate}
+Es una subdisciplina de la IA que se centra en algoritmos que permiten a las máquinas aprender de datos sin ser explícitamente programadas. Según Tom Mitchell (1997), un sistema aprende si mejora su rendimiento en una tarea con la experiencia
+
+\subsection{Redes neuronales artificiales}
+Las redes neuronales, un modelo de machine learnig (aprendizaje automático) inspirado en el cerebro humano, están formadas por nodos (neuronas) dispuestos en capas que procesan datos y ajustan conexiones (pesos) para aprender. Según Yann LeCun (2015, Nature), estas redes son "sistemas que adquieren representaciones jerárquicas de los datos
+
+\begin{figure}[htbp]
+	\centering
+	\neuronacompleta[0.8]{6}{j}
+	\caption{Modelo de neurona estándar}
+	\label{fig:neurona_escalada}
+\end{figure}
+
+
+\subsection{Deep Learning}
+
+El Deep learning (aprendizaje profundo) de igual manera, es una rama del machine learnig (aprendizaje automático), emplea redes neuronales artificiales con múltiples capas (lo que explica el término "profundo") para analizar y aprender patrones complejos de grandes volúmenes de datos. Estas redes, inspiradas de forma simplificada en el cerebro humano, organizan neuronas en capas que extraen características de manera ¿jerárquica: por ejemplo, en una imagen, las primeras capas identifican bordes, las siguientes formas simples y las más avanzadas objetos completos como rostros o vehículos.\\
+
+(citamos Deep learning) definen el deep learning como un conjunto de métodos que permiten a las computadoras aprender representaciones jerárquicas de datos a través de redes neuronales artificiales con múltiples capas. Explican que estas redes "extraen automáticamente características de los datos en diferentes niveles de abstracción, desde patrones simples hasta conceptos complejos, sin necesidad de ingeniería manual de características".
+
+\subsection{Monitoreo de Salud Estructural Basado en Aprendizaje Profundo }
+El monitoreo de salud estructural basado en aprendizaje profundo (Deep learning) es un campo emergente que utiliza técnicas avanzadas de inteligencia artificial para evaluar la integridad de estructuras civiles como puentes, edificios, presas y túneles, estos se clasifican a su vez en los siguientes:
+
+%\foto{Graficos/FIGURA5}{Representación esquemática de los sensores de próxima generación y sus plataformas.}{fig5}{Monitoreo del estado de las carreteras mediante sensores inteligentes e inteligencia artificial}
+
+
+\paragraph{Métodos no destructivos:}Utilizan aprendizaje profundo (Deep learnig) para analizar datos de ultrasonido, termografía o radar de penetración terrestre, identificando defectos sin dañar la estructura
+
+\paragraph{Visión artificial:}Procesan imágenes o vídeos para detectar daños superficiales (grietas, corrosión, desconchados). Incluyen:
+
+\begin{enumerate}
+	\item Clasificación: Redes neuronales convolicionaes (CNNs) como ResNet, Segmofer, clasifican imágenes como "dañadas" o "sanas".
+	\item Detección: Modelos como YOLO, Segmofer.
+	\item Segmentación: U-Net o DeepLab , Segmofer.
+\end{enumerate} 
+
+\paragraph{Integración con UAVs y Gemelos Digitales} UAVs capturan imágenes en áreas de difícil acceso, mientras los gemelos digitales combinan datos visuales y de sensores para modelado 3D en tiempo real, estos a su vez se clasifican en: 
+
+\begin{enumerate}
+	\item Sistemas basados en imágenes\\
+	Los sistemas basados en captura de señales utilizan sensores de smartphones o dispositivos embarcados (como acelerómetros, giroscopios o micrófonos) para detectar vibraciones, cambios de aceleración o sonidos generados al pasar un vehículo sobre baches u otros daños en el pavimento
+	
+	%\foto{Graficos/FIGURA11}{Sistemas basados en imágene}{fig11}{Monitoreo del estado de las carreteras mediante sensores inteligentes e inteligencia artificial}
+	
+	\paragraph{Ventajas:}
+	
+	\begin{itemize}
+		\item \textbf{Costo – Efectividad:} Utiliza cámaras de bajo costo (p. ej., Intel RealSense D435i) en comparación con sistemas láser o sensores especializados, haciéndolo accesible para inspecciones a gran escala.
+		\item \textbf{No invasivo} Detecta baches sin necesidad de contacto físico, reduciendo riesgos de daño al vehículo.
+		\item \textbf{Alta precisión de segmentación} Modelos como Segformer-B2 ofrecen métricas robustas (Recall 90.87$\%$, Precisión 90.01$\%$) y manejan ruido ambiental como sombras, manchas o texturas heterogéneas.
+		\item \textbf{Integración con otros datos}Puede combinarse con nubes de puntos 3D (como en el artículo) para estimar dimensiones físicas, mejorando su utilidad más allá de la detección
+	\end{itemize}
+	\paragraph{Desventajas}
+	
+	\begin{itemize}
+		\item \textbf{Dependencia de Condiciones de Iluminación:}La precisión puede verse afectada por cambios extremos de luz, sombras, lluvia o condiciones nocturnas, ya que las pruebas suelen realizarse en entornos controlados (p. ej., días soleados).
+		\item \textbf{o	Limitaciones en Cuantificación:} Sin integración con datos 3D, no puede medir profundidad o dimensiones precisas, limitándose a detección o clasificación.
+		\item \textbf{Conjuntos de Datos Limitados:}Requiere grandes cantidades de imágenes etiquetadas, y los conjuntos de datos públicos son escasos, lo que puede restringir la generalización.
+		\item \textbf{Costo Computacional:} Modelos de aprendizaje profundo como Segformer requieren recursos significativos para entrenamiento y, en menor medida, para inferencia en tiempo real.
+	\end{itemize}
+	\item Sistema de captura de señales \\
+	Los sistemas de captura de señales utilizan sensores como acelerómetros, giroscopios o micrófonos (a menudo en smartphones o dispositivos embarcados) para detectar vibraciones, cambios de aceleración o sonidos generados al pasar un vehículo sobre un bache. Estas señales se procesan con algoritmos de aprendizaje automático (p. ej., redes convolucionales) para clasificar la presencia de baches
+	
+	%\foto{Graficos/FIGURA10}{Sistema de captura de señales}{fig10}{Monitoreo del estado de las carreteras mediante sensores inteligentes e inteligencia artificial}
+	
+	\paragraph{Ventajas:}
+	\begin{itemize}
+		\item \textbf{Bajo Costo:}Utiliza sensores comunes en smartphones o dispositivos embarcados, que son económicos y ampliamente disponibles, reduciendo la necesidad de hardware especializado. 
+		\item \textbf{Facilidad de Implementación:} Puede integrarse en vehículos existentes sin modificaciones significativas, usando aplicaciones móviles o sensores simples. 
+		\item \textbf{Alta Precisión en Detección:}Logra tasas de detección >90 $\%$ con redes neuronales, adecuado para identificar la presencia de baches en tiempo real. 
+		\item \textbf{Portabilidad:}Los sensores son compactos y fáciles de transportar, ideales para inspecciones rápidas o participativas (crowdsourcing).
+	\end{itemize}
+	
+	\paragraph{Desventajas:}
+	\begin{itemize}
+		\item \textbf{Requiere Contacto Físico:} Necesita que el vehículo pase sobre el bache, lo que aumenta el riesgo de daño al vehículo y limita la detección a áreas transitadas. 
+		\item \textbf{Sensibilidad a Condiciones del Vehículo:} La precisión depende de la velocidad, suspensión, peso y ubicación del sensor, generando falsos positivos/negativos en condiciones variables. 
+		\item \textbf{Falta de Cuantificación:}No mide dimensiones físicas (diámetro, profundidad), limitándose a detección o clasificación, lo que reduce su utilidad para evaluar severidad o planificar reparaciones. 
+		\item \textbf{Ruido Ambiental:}Las señales pueden verse afectadas por irregularidades del pavimento no relacionadas con baches (p. ej., juntas de dilatación), reduciendo la confiabilidad en entornos complejos
+	\end{itemize}
+	
+	\item Sistema basado en reconstrucción tridimensional (3D)
+	Los sistemas basados en reconstrucción 3D utilizan tecnologías como escáneres láser, cámaras estéreo o monoculares con técnicas de Structure-from-Motion (SfM) para generar nubes de puntos tridimensionales del pavimento. Estos datos permiten detectar baches, segmentarlos y cuantificar dimensiones físicas (diámetro, profundidad, volumen)
+	
+	
+	%\foto{Graficos/FIGURA6}{Sistema basado en reconstrucción tridimensional (3D)}{fig6}{Monitoreo del estado de las carreteras mediante sensores inteligentes e inteligencia artificial}
+	
+	\paragraph{Ventajas:}
+	\begin{itemize}
+		\item \textbf{Cuantificación Precisa:} Proporciona mediciones exactas de dimensiones (diámetro, profundidad, volumen), esenciales para evaluar la severidad del daño (p. ej., error de profundidad de 5.94 mm en el artículo, mejor que los 1-6 cm de sistemas láser). 
+		\item \textbf{Robustez a Condiciones Visuales:} Menos dependiente de la iluminación que los sistemas basados en imágenes, ya que los datos 3D se basan en distancias físicas, no en colores o texturas. 
+		\item \textbf{Información Espacial Completa:} Permite una representación detallada de la geometría del bache, útil para análisis estructural y planificación de reparaciones. 
+		\item \textbf{No Invasivo:} Al igual que los sistemas basados en imágenes, no requiere contacto físico con el pavimento.
+	\end{itemize}
+	
+	\paragraph{Desventajas:}
+	\begin{itemize}
+		\item \textbf{Alto Costo:}Los sistemas láser de alta precisión (p. ej., Riegl VQ-450) son extremadamente costosos (>20,000 USD), y aunque cámaras como RealSense son más económicas, su rango y precisión son limitados. 
+		\item \textbf{Complejidad Computacional:} Procesar nubes de puntos requiere alto poder de cómputo y almacenamiento, especialmente para sistemas de alta densidad (130-190 puntos/$m^{2}$ en algunos casos). 
+		\item \textbf{Sensibilidad a Outliers:} Factores como vibraciones del vehículo, polvo o superficies reflectantes pueden introducir ruido en las nubes de puntos, requiriendo algoritmos de filtrado robustos (p. ej., RANSAC). 
+		\item \textbf{Velocidad de Captura Limitada:} Algunos sistemas 3D, como los basados en SfM o captura multi-vista, son lentos para inspecciones a gran escala (p. ej., [13] usa captura estática multi-ángulo), lo que los hace menos prácticos para carreteras extensas.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Enfoque basado en visión artificial para la identificación de daños superficiales}Este enfoque aprovecha el aprendizaje profundo (Deep Learnig) para procesar imágenes y videos, permitiendo una evaluación no destructiva y automatizada de daños como grietas, corrosión, desconchados (spalling), delaminación y otros defectos visibles en superficies de estructuras civiles como puentes, edificios y presas. 
+
+\subsection{Modelo de detección de baches mediante visión artificial}
+Un modelo de detección de baches basado en visión artificial utiliza inteligencia artificial para identificar irregularidades en carreteras y otras infraestructuras viales a partir de datos visuales, como imágenes RGB o secuencias de video. Este sistema se entrena con técnicas de procesamiento de imágenes y aprendizaje automático para reconocer patrones específicos, como variaciones en la intensidad de píxeles, discontinuidades geométricas o contrastes en la superficie del pavimento.
+Es un sistema automatizado que utiliza técnicas de procesamiento de imágenes y nube de puntos 3D para identificar, medir y evaluar baches en pavimentos de manera eficiente, precisa y económica. Basado en el uso de herramientas (cámaras de profundidad) montada en un vehículo, el modelo captura imágenes RGB y nubes de puntos 3D mientras se desplaza. Estas imágenes se preprocesan (conversión a escala de grises, redimensionado) y se analizan mediante una red neuronal Segformer, que realiza segmentación semántica para detectar contornos de baches con alta precisión \textcite{TC2023hector}
+
+\subsubsection{Google Colaboraty (Colab)}
+
+Google Colab es una plataforma de Google que permite escribir y ejecutar código Python directamente desde el navegador, sin necesidad de instalar Python, librerías o configurar un entorno de desarrollo en la computadora. Es especialmente utilizada para ciencia de datos, aprendizaje automático e inteligencia artificial, porque permite acceder, según disponibilidad, a recursos de cómputo como GPU.
+
+Google Colaboratory (Colab) es un servicio en la nube gratuito basado en Jupyter Notebooks, diseñado para facilitar la educación e investigación en aprendizaje automático. Ofrece un entorno de ejecución completamente preconfigurado con las principales bibliotecas de inteligencia artificial (como TensorFlow, Keras y Matplotlib), soporte para Python y acceso sin costo a una GPU robusta, lo que permite acelerar aplicaciones de deep learning y otras tareas intensivas en GPU. Está integrado con Google Drive, permite compartir y colaborar en notebooks de forma sencilla, y proporciona un runtime acelerado que alcanza un rendimiento comparable al de hardware dedicado con recursos similares. Aunque sus recursos gratuitos no son escalables ni suficientes para problemas reales de gran envergadura, y presenta limitaciones como la escasez de núcleos de CPU y restricciones de tiempo de sesión, resulta una herramienta práctica y accesible para investigadores, estudiantes y usuarios que necesiten experimentar con computación de alto rendimiento sin configurar hardware propio.\textcite{Tcolab2018}
+
+%\foto{Graficos/FIGURA2}{Instalación del Sensor del vehículo}{fig2}{(Arquitectura para la evaluación de baches en el pavimento mediante aprendizaje profundo, visión artificial y lógica difusa)}
+
+\subsection{Lógica difusa}
+La lógica difusa es un enfoque matemático que extiende la lógica clásica (binaria, verdadero/falso) para manejar incertidumbre y ambigüedad, permitiendo valores de verdad parciales en un rango continuo entre 0 y 1. Introducida por Lotfi Zadeh en 1965, se basa en conjuntos difusos (fuzzy sets), donde un elemento puede pertenecer parcialmente a múltiples categorías.\\
+La lógica clásica se basa en valores binarios estrictos: verdadero o falso (1 o 0). La lógica difusa, en cambio, permite que las variables tomen cualquier valor en un continuo entre verdadero y falso. Introduce grados de verdad entre 0 y 1, lo que permite tratar la incertidumbre y la imprecisión de forma más natural y cercana al razonamiento humano.\\
+\textcite{Tsegfomer2018} La lógica difusa (fuzzy logic) es un enfoque matemático y Computacional que permite modelar y manejar incertidumbre y conceptos imprecisos, imitando el razonamiento humano en la toma de decisiones. A diferencia de la lógica clásica, que utiliza valores binarios (verdadero/falso, 0/1), la lógica difusa asigna grados de pertenencia en un rango continuo [0, 1], permitiendo representar estados intermedios (p. ej., "parcialmente verdadero").
+
+\subsection{Sistemas de inferencia de logica difusa}
+Los sistemas de inferencia difusa constan de tres etapas principales: la fuzzificación, el motor de inferencia y la defuzzificación.\\ 
+Los procesos de fuzzificación y desfuzzificación resultan esenciales en los sistemas de lógica difusa. A través de la fuzzificación, las entradas precisas se convierten en valores difusos, lo que facilita el manejo de la incertidumbre. Por su parte, la desfuzzificación transforma las salidas difusas en valores precisos, permitiendo obtener resultados prácticos. Cada método de desfuzzificación —como el centroide, la media de los máximos o el promedio ponderado— presenta ventajas propias y se ajusta a distintos tipos de aplicaciones. La gran versatilidad de estos sistemas permite su uso en múltiples contextos reales, desde el control de sistemas hasta el diagnóstico médico, evidenciando su capacidad para gestionar información compleja e incierta.\\
+%\foto{Graficos/fuzzificacion_defuzificacion}{Logica Clasifica - Lógica Difusa }{fuzzificacion_defuzificacion}{(www.fujielectric.fr-es-blog)}
+El proceso tipico de un sistema difuso incluye.
+\paragraph{Fuzzificación} La fuzzificación es el primer paso en un sistema de lógica difusa, donde los valores de entrada precisos se convierten en valores difusos, lo que permite al sistema manejar la incertidumbre y la vaguedad inherentes a los datos del mundo real. En términos sencillos, la fuzzificación toma números claros y bien definidos (como $35^\circ$) y los transforma en conjuntos o categorías difusas (como cálido o caliente).
+\paragraph{Defuzzificación} La defuzzificación es el proceso inverso de la fuzzificación. Consiste en convertir los valores de salida difusos en un único valor nítido para tomar decisiones prácticas. Existen varios métodos para realizar la desdifuminación, cada uno adecuado para diferentes tipos de sistemas difusos y aplicaciones.
+
+
+
+
